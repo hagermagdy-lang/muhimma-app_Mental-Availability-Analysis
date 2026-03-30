@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f36b1f",
+                        "secondary": "#fbb447",
+                        "background": "#0e0e0e",
+                        "surface": "#131314",
+                        "surface-container": "#1c1c1d",
+                        "surface-container-low": "#161617",
+                        "surface-container-high": "#232324",
+                        "surface-container-highest": "#2d2d2e",
+                        "on-surface": "#e4e4e4",
+                        "on-surface-variant": "#acabaa",
+                        "outline": "#333333",
+                        "outline-variant": "#444444",
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk", "sans-serif"],
+                        "body": ["Space Grotesk", "sans-serif"],
+                        "label": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "sm": "0.125rem",
+                        "md": "0.25rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0e0e0e;
+            color: #e4e4e4;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { display: none; }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    </style>
+</head>
+<body class="bg-background font-body selection:bg-primary/30">
+<!-- TopAppBar (Shared Component COMPONENT_12) -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#0e0e0e] flex justify-between items-center px-6 py-4 border-b border-[#131314]">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center w-10 h-10 rounded-sm hover:bg-[#1f2020] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#f36b1f]">arrow_back</span>
+</button>
+<h1 class="text-[#f36b1f] font-['Space_Grotesk'] font-bold tracking-tighter text-xl uppercase">Brand A Analysis</h1>
+</div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#f36b1f]">analytics</span>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto space-y-6">
+<!-- Hero Visualization Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<div class="lg:col-span-8 flex flex-col justify-end p-8 bg-surface-container-low rounded-sm relative overflow-hidden h-[340px] border border-outline-variant/10">
+<div class="absolute inset-0 opacity-10">
+<img class="w-full h-full object-cover grayscale brightness-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrmAluRFD9x6II_A1a1GSksJuCd_hXqZ3YBIi0ubBAQGmne9_TAH15fdfyvOsQTGBUe2R_qDaDNaGVGvelSEtLTB_DeNLYBmCnv32gqu1PoDqryatig3mHB2AYt23xFwAxUs8W97prBICoqKg7_EO7RoWJKmqR8F8HSRDpirEHb1pzatlbVhzEtRMmVKbPs7cwEyj5EJ2iU2--MswHNNsbojG9XIUl2Q1hsYg3iD7IYPAL7UBBLYYKmlcH95qmrEMWG8nJshKiEiU"/>
+</div>
+<div class="relative z-10">
+<span class="text-secondary font-bold text-[10px] uppercase tracking-[0.2em] mb-3 block">Performance Asset</span>
+<h2 class="text-4xl md:text-5xl font-black tracking-tighter text-on-surface mb-4 uppercase italic">Brand A Penetration</h2>
+<div class="flex items-baseline gap-3">
+<span class="text-6xl font-black text-primary tracking-tighter">24.8%</span>
+<span class="text-secondary flex items-center text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>+3.2% vs LW
+                    </span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 grid grid-cols-1 gap-4">
+<div class="bg-surface-container p-6 rounded-sm flex flex-col justify-between border border-outline-variant/10">
+<div>
+<p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Network Size</p>
+<h3 class="text-3xl font-black text-on-surface italic uppercase">1,248 Units</h3>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full mt-6">
+<div class="h-full bg-primary w-[72%] rounded-full shadow-[0_0_12px_rgba(243,107,31,0.5)]"></div>
+</div>
+</div>
+<div class="bg-surface-container p-6 rounded-sm flex flex-col justify-between border border-outline-variant/10">
+<div>
+<p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Market Sentiment</p>
+<h3 class="text-3xl font-black text-on-surface italic uppercase">Strong Positive</h3>
+</div>
+<div class="flex gap-1.5 mt-6">
+<div class="h-5 w-full bg-primary/20 rounded-sm"></div>
+<div class="h-5 w-full bg-primary/50 rounded-sm"></div>
+<div class="h-5 w-full bg-primary rounded-sm"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Metrics Bento Grid -->
+<section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Mental Penetration -->
+<div class="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Mental Pen.</p>
+<span class="material-symbols-outlined text-primary text-lg">psychology</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl font-black italic tracking-tighter">14.2%</span>
+<span class="text-primary text-[10px] font-bold mt-1">+0.8%</span>
+</div>
+</div>
+<!-- Network Size -->
+<div class="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Network</p>
+<span class="material-symbols-outlined text-primary text-lg">hub</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl font-black italic tracking-tighter">4.21</span>
+<span class="text-primary text-[10px] font-bold mt-1">+0.12</span>
+</div>
+</div>
+<!-- Mental Market Share -->
+<div class="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Market Share</p>
+<span class="material-symbols-outlined text-primary text-lg">pie_chart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl font-black italic tracking-tighter">28.5%</span>
+<span class="text-[#ff4444] text-[10px] font-bold mt-1">-1.2%</span>
+</div>
+</div>
+<!-- Share of Mind -->
+<div class="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Mind Share</p>
+<span class="material-symbols-outlined text-primary text-lg">visibility</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl font-black italic tracking-tighter">19.0%</span>
+<span class="text-primary text-[10px] font-bold mt-1">+2.4%</span>
+</div>
+</div>
+</section>
+<!-- Analysis Row -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+<!-- Time Series Chart -->
+<div class="xl:col-span-8 bg-surface-container-low p-6 rounded-sm border border-outline-variant/10">
+<div class="flex justify-between items-center mb-10">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] text-primary italic">Mental Penetration Trend (12M)</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 bg-surface-container-highest text-[9px] rounded-sm uppercase font-bold tracking-widest border border-outline/50 hover:bg-surface-container transition-colors">Export</button>
+<button class="px-3 py-1.5 bg-primary text-black text-[9px] rounded-sm uppercase font-black tracking-widest hover:bg-secondary transition-colors">Analyze</button>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-1.5 px-2 border-b border-outline-variant/30">
+<div class="flex-1 bg-primary/10 h-[40%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/15 h-[45%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[50%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/25 h-[48%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-[55%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/35 h-[62%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[70%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/45 h-[68%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/50 h-[75%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/60 h-[82%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/80 h-[90%] relative group cursor-pointer transition-all hover:bg-primary/40 rounded-t-sm"></div>
+<div class="flex-1 bg-primary h-[95%] relative group cursor-pointer transition-all hover:bg-secondary rounded-t-sm shadow-[0_0_15px_rgba(243,107,31,0.3)]"></div>
+</div>
+<div class="flex justify-between mt-4 text-[9px] text-on-surface-variant font-black uppercase tracking-widest px-2">
+<span>Jul '23</span>
+<span>Oct '23</span>
+<span>Jan '24</span>
+<span>Jun '24</span>
+</div>
+</div>
+<!-- CEP Strength Breakdown -->
+<div class="xl:col-span-4 bg-surface-container-high p-6 rounded-sm border border-outline-variant/10">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] text-primary italic mb-8">CEP Association Strength</h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+<span class="text-on-surface">Social Event</span>
+<span class="text-primary">78%</span>
+</div>
+<div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[78%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+<span class="text-on-surface">Late Night</span>
+<span class="text-primary">42%</span>
+</div>
+<div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%] rounded-full opacity-60"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+<span class="text-on-surface">Post-Workout</span>
+<span class="text-primary">15%</span>
+</div>
+<div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[15%] rounded-full opacity-30"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+<span class="text-on-surface">Morning Routine</span>
+<span class="text-primary">29%</span>
+</div>
+<div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[29%] rounded-full opacity-40"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Benchmarking Comparison -->
+<section class="bg-surface-container-lowest p-8 rounded-sm border border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+<div>
+<h3 class="text-2xl font-black italic uppercase tracking-tight text-on-surface">Benchmarking Analysis</h3>
+<p class="text-on-surface-variant text-xs font-medium mt-1">Relative performance vs. category benchmarks.</p>
+</div>
+<div class="flex bg-surface-container rounded-sm p-1 border border-outline-variant/20">
+<button class="px-5 py-2 bg-primary text-black text-[10px] font-black uppercase tracking-widest rounded-sm">VS Category</button>
+<button class="px-5 py-2 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest hover:text-on-surface transition-colors">VS Competitor B</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+<!-- Metric 1 -->
+<div class="space-y-8">
+<p class="text-[11px] font-black uppercase tracking-[0.3em] text-secondary">Salience Index</p>
+<div class="flex items-end gap-4 h-44">
+<div class="flex-1 bg-primary relative rounded-t-sm group">
+<div class="h-[85%] w-full bg-primary rounded-t-sm shadow-[0_-4px_12px_rgba(243,107,31,0.2)]"></div>
+<p class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-widest italic">Brand A</p>
+</div>
+<div class="flex-1 bg-surface-container-highest relative rounded-t-sm group">
+<div class="h-[60%] w-full bg-surface-container-highest rounded-t-sm"></div>
+<p class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant italic">Avg.</p>
+</div>
+</div>
+<p class="text-sm font-black pt-6 uppercase italic tracking-tight text-primary">+25.4% <span class="text-on-surface-variant font-medium not-italic ml-1">above category</span></p>
+</div>
+<!-- Metric 2 -->
+<div class="space-y-8">
+<p class="text-[11px] font-black uppercase tracking-[0.3em] text-secondary">Distinctiveness</p>
+<div class="flex items-end gap-4 h-44">
+<div class="flex-1 bg-primary relative rounded-t-sm group">
+<div class="h-[45%] w-full bg-primary rounded-t-sm"></div>
+<p class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-widest italic">Brand A</p>
+</div>
+<div class="flex-1 bg-surface-container-highest relative rounded-t-sm group">
+<div class="h-[52%] w-full bg-surface-container-highest rounded-t-sm"></div>
+<p class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant italic">Avg.</p>
+</div>
+</div>
+<p class="text-sm font-black pt-6 uppercase italic tracking-tight text-[#ff4444]">-7.2% <span class="text-on-surface-variant font-medium not-italic ml-1">below category</span></p>
+</div>
+<!-- Metric 3 -->
+<div class="space-y-8">
+<p class="text-[11px] font-black uppercase tracking-[0.3em] text-secondary">Brand Power</p>
+<div class="flex items-end gap-4 h-44">
+<div class="flex-1 bg-primary relative rounded-t-sm group">
+<div class="h-[92%] w-full bg-primary rounded-t-sm shadow-[0_-4px_12px_rgba(243,107,31,0.2)]"></div>
+<p class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-widest italic">Brand A</p>
+</div>
+<div class="flex-1 bg-surface-container-highest relative rounded-t-sm group">
+<div class="h-[40%] w-full bg-surface-container-highest rounded-t-sm"></div>
+<p class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant italic">Avg.</p>
+</div>
+</div>
+<p class="text-sm font-black pt-6 uppercase italic tracking-tight text-primary">+52.0% <span class="text-on-surface-variant font-medium not-italic ml-1">above category</span></p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component COMPONENT_12) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#131314]/90 backdrop-blur-xl border-t border-[#f36b1f]/10 shadow-[0_-8px_24px_rgba(0,0,0,0.4)] flex justify-around items-center px-4 pb-6 pt-3">
+<a class="flex flex-col items-center justify-center text-[#acabaa] px-4 py-1 hover:text-[#fbb447] transition-all" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f36b1f] text-black rounded-sm px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1">layers</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">Brands</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#acabaa] px-4 py-1 hover:text-[#fbb447] transition-all" href="#">
+<span class="material-symbols-outlined mb-1">insights</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#acabaa] px-4 py-1 hover:text-[#fbb447] transition-all" href="#">
+<span class="material-symbols-outlined mb-1">cloud_upload</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">Upload</span>
+</a>
+</nav>
+</body></html>

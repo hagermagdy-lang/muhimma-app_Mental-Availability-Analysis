@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CEP Associations | MUHIMMA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f36b1f",
+              "secondary": "#fbb447",
+              "background": "#0e0e0e",
+              "surface": "#131314",
+              "surface-container": "#1f2020",
+              "on-background": "#ffffff",
+              "on-surface": "#acabaa",
+              "on-primary": "#000000",
+              "outline": "#2d2d2d"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {
+              "DEFAULT": "0px",
+              "sm": "2px",
+              "lg": "4px",
+              "xl": "8px",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2020;
+            border-radius: 0px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f36b1f;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+            background-color: #0e0e0e;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- TopAppBar (Shared Component 12) -->
+<header class="fixed top-0 w-full z-50 bg-[#0e0e0e] border-b border-[#131314] flex justify-between items-center px-6 h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f36b1f]" style="font-size: 24px;">analytics</span>
+<h1 class="text-[#f36b1f] font-black tracking-tighter text-2xl uppercase font-headline">MUHIMMA</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#acabaa] hover:bg-[#1f2020] transition-colors px-3 py-1 rounded-sm font-bold tracking-tight text-sm active:scale-95 duration-200" href="#">Upload</a>
+<a class="text-[#acabaa] hover:bg-[#1f2020] transition-colors px-3 py-1 rounded-sm font-bold tracking-tight text-sm active:scale-95 duration-200" href="#">Dashboard</a>
+<a class="text-[#acabaa] hover:bg-[#1f2020] transition-colors px-3 py-1 rounded-sm font-bold tracking-tight text-sm active:scale-95 duration-200" href="#">Analysis</a>
+<a class="text-[#f36b1f] px-3 py-1 font-bold tracking-tight text-sm" href="#">CEP Grid</a>
+</nav>
+<span class="material-symbols-outlined text-[#f36b1f] cursor-pointer hover:rotate-90 transition-transform duration-300">settings</span>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-[1440px] mx-auto min-h-screen">
+<!-- Header & Controls -->
+<section class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-2 mb-3">
+<span class="w-12 h-1 bg-primary"></span>
+<span class="text-primary font-bold text-xs tracking-[0.2em] uppercase">Performance Analysis</span>
+</div>
+<h2 class="text-4xl md:text-6xl font-black tracking-tighter text-on-background mb-4 uppercase">CEP Associations</h2>
+<p class="text-[#acabaa] max-w-xl text-sm leading-relaxed font-light">
+                Analyzing Category Entry Point (CEP) strength across core brand assets. Identifying white space opportunities and competitive overlaps using high-density telemetry.
+            </p>
+</div>
+<div class="bg-surface p-6 border border-primary/10 rounded-sm flex items-center gap-6">
+<div class="flex flex-col gap-1">
+<span class="text-[10px] uppercase tracking-widest text-[#acabaa] font-black">Grid View Mode</span>
+<div class="flex items-center gap-3">
+<span class="text-xs font-bold text-white">Standard</span>
+<button class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center rounded-sm bg-[#2d2d2d] transition-colors focus:outline-none">
+<span class="translate-x-5 inline-block h-4 w-4 transform rounded-sm bg-primary transition duration-200 ease-in-out"></span>
+</button>
+<span class="text-xs font-bold text-primary">Show Delta</span>
+</div>
+</div>
+<div class="h-10 w-px bg-primary/20"></div>
+<button class="bg-primary hover:bg-secondary text-on-primary px-6 py-2.5 rounded-sm text-[11px] font-black uppercase tracking-widest transition-all active:scale-95 duration-200">
+                Export .CSV
+            </button>
+</div>
+</section>
+<!-- The Grid & Heatmap -->
+<div class="grid grid-cols-12 gap-1 border border-primary/5">
+<!-- Sidebar: Brand Labels -->
+<div class="col-span-12 md:col-span-2 bg-[#131314] p-6 flex flex-col justify-end">
+<div class="mb-4">
+<h3 class="text-[10px] uppercase tracking-[0.2em] text-[#acabaa] font-black mb-10">Asset Cluster</h3>
+<div class="space-y-14">
+<div class="group cursor-pointer">
+<span class="block text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">Brand A</span>
+<span class="text-[10px] text-[#acabaa] uppercase tracking-widest opacity-60">Market Leader</span>
+</div>
+<div class="group cursor-pointer">
+<span class="block text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">Brand B</span>
+<span class="text-[10px] text-[#acabaa] uppercase tracking-widest opacity-60">Challenger</span>
+</div>
+<div class="group cursor-pointer">
+<span class="block text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">Brand C</span>
+<span class="text-[10px] text-[#acabaa] uppercase tracking-widest opacity-60">Niche Player</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Heatmap Scrollable Area -->
+<div class="col-span-12 md:col-span-10 overflow-x-auto bg-[#0e0e0e]">
+<div class="min-w-[1000px]">
+<!-- Column Headers -->
+<div class="grid grid-cols-6 border-b border-primary/10">
+<div class="p-8 text-center border-r border-primary/10 bg-[#1f2020]/30">
+<span class="material-symbols-outlined text-primary block mb-3" style="font-size: 24px;">celebration</span>
+<span class="text-[10px] uppercase font-black tracking-[0.2em] text-white">Social Event</span>
+</div>
+<div class="p-8 text-center border-r border-primary/10">
+<span class="material-symbols-outlined text-[#acabaa] block mb-3" style="font-size: 24px;">dark_mode</span>
+<span class="text-[10px] uppercase font-black tracking-[0.2em] text-white">Late Night</span>
+</div>
+<div class="p-8 text-center border-r border-primary/10 bg-[#1f2020]/30">
+<span class="material-symbols-outlined text-[#acabaa] block mb-3" style="font-size: 24px;">fastfood</span>
+<span class="text-[10px] uppercase font-black tracking-[0.2em] text-white">Quick Snack</span>
+</div>
+<div class="p-8 text-center border-r border-primary/10">
+<span class="material-symbols-outlined text-[#acabaa] block mb-3" style="font-size: 24px;">work</span>
+<span class="text-[10px] uppercase font-black tracking-[0.2em] text-white">Office Break</span>
+</div>
+<div class="p-8 text-center border-r border-primary/10 bg-[#1f2020]/30">
+<span class="material-symbols-outlined text-[#acabaa] block mb-3" style="font-size: 24px;">fitness_center</span>
+<span class="text-[10px] uppercase font-black tracking-[0.2em] text-white">Post-Workout</span>
+</div>
+<div class="p-8 text-center">
+<span class="material-symbols-outlined text-[#acabaa] block mb-3" style="font-size: 24px;">family_restroom</span>
+<span class="text-[10px] uppercase font-black tracking-[0.2em] text-white">Family Dinner</span>
+</div>
+</div>
+<!-- Row 1: Brand A -->
+<div class="grid grid-cols-6 h-36">
+<div class="relative flex items-center justify-center bg-[#f36b1f] text-black font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        78%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold">+12.4</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#f36b1f]/60 text-white font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        54%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-secondary">+2.1</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#f36b1f]/40 text-white font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        42%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/60">-4.5</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#f36b1f]/20 text-white font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        22%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/40">-12.0</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#131314] text-[#acabaa] font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        09%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/20">-18.2</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#f36b1f]/80 text-black font-black text-3xl border-b border-[#0e0e0e]">
+                        65%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold">+8.8</div>
+</div>
+</div>
+<!-- Row 2: Brand B -->
+<div class="grid grid-cols-6 h-36">
+<div class="relative flex items-center justify-center bg-[#fbb447]/30 text-white font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        31%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/40">-8.2</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447]/80 text-black font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        72%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold">+14.2</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447] text-black font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        84%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold">+22.1</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447]/50 text-white font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        48%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-secondary">+1.4</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447]/10 text-[#acabaa] font-black text-3xl border-r border-b border-[#0e0e0e]">
+                        15%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/20">-5.5</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447]/20 text-[#acabaa] font-black text-3xl border-b border-[#0e0e0e]">
+                        21%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/30">-10.2</div>
+</div>
+</div>
+<!-- Row 3: Brand C -->
+<div class="grid grid-cols-6 h-36">
+<div class="relative flex items-center justify-center bg-[#131314] text-[#acabaa] font-black text-3xl border-r border-[#0e0e0e]">
+                        05%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/10">-28.0</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#f36b1f]/10 text-[#acabaa] font-black text-3xl border-r border-[#0e0e0e]">
+                        12%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/20">-14.2</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#f36b1f]/20 text-[#acabaa] font-black text-3xl border-r border-[#0e0e0e]">
+                        18%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-primary/30">-8.0</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447]/80 text-black font-black text-3xl border-r border-[#0e0e0e]">
+                        76%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold">+28.5</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447] text-black font-black text-3xl border-r border-[#0e0e0e]">
+                        92%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold">+42.1</div>
+</div>
+<div class="relative flex items-center justify-center bg-[#fbb447]/40 text-white font-black text-3xl border-[#0e0e0e]">
+                        38%
+                        <div class="absolute top-3 right-3 text-[11px] font-bold text-secondary">+2.4</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Metric Sparkline Widgets -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+<div class="bg-[#131314] p-6 border-l-2 border-primary">
+<span class="text-[10px] uppercase font-black text-[#acabaa] tracking-[0.2em]">Avg. Association</span>
+<div class="flex items-end justify-between mt-3">
+<span class="text-4xl font-black tracking-tighter text-white">42.8%</span>
+<div class="flex items-center gap-1 text-primary text-xs font-black uppercase">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+                    +2.4%
+                </div>
+</div>
+<div class="mt-6 h-1.5 w-full bg-[#2d2d2d] overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+</div>
+<div class="bg-[#131314] p-6 border-l-2 border-secondary">
+<span class="text-[10px] uppercase font-black text-[#acabaa] tracking-[0.2em]">Top Performing CEP</span>
+<div class="flex items-center gap-2 mt-3">
+<span class="text-xl font-black tracking-tight text-secondary uppercase">Post-Workout</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="text-xs text-[#acabaa] font-medium">Lead Asset: Brand C</span>
+<span class="text-xs font-black bg-secondary/10 text-secondary px-2 py-0.5 rounded-sm">92%</span>
+</div>
+</div>
+<div class="bg-[#131314] p-6 border-l-2 border-primary">
+<span class="text-[10px] uppercase font-black text-[#acabaa] tracking-[0.2em]">Competitive Index</span>
+<div class="flex items-end justify-between mt-3">
+<span class="text-4xl font-black tracking-tighter text-white">0.74</span>
+<span class="text-[10px] text-primary font-black uppercase tracking-widest">HIGH OVERLAP</span>
+</div>
+<div class="mt-6 flex gap-1.5">
+<div class="h-1.5 flex-1 bg-primary"></div>
+<div class="h-1.5 flex-1 bg-primary"></div>
+<div class="h-1.5 flex-1 bg-primary"></div>
+<div class="h-1.5 flex-1 bg-[#2d2d2d]"></div>
+</div>
+</div>
+<div class="bg-[#131314] p-6 border-l-2 border-primary">
+<span class="text-[10px] uppercase font-black text-[#acabaa] tracking-[0.2em]">Data Freshness</span>
+<div class="flex items-center gap-3 mt-3">
+<span class="w-2.5 h-2.5 rounded-sm bg-primary animate-pulse"></span>
+<span class="text-sm font-black text-white uppercase tracking-tighter">Real-Time Sync</span>
+</div>
+<p class="text-[10px] text-[#acabaa] mt-3 uppercase tracking-widest font-medium">Updated: 14m ago from Global Cluster</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Shared Component 12) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#131314]/90 backdrop-blur-xl border-t border-[#f36b1f]/10 shadow-[0_-8px_24px_rgba(0,0,0,0.4)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#acabaa] px-4 py-1 hover:text-[#fbb447] transition-all duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1">cloud_upload</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-widest">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#acabaa] px-4 py-1 hover:text-[#fbb447] transition-all duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-widest">Dash</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#acabaa] px-4 py-1 hover:text-[#fbb447] transition-all duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1">insights</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-widest">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f36b1f] text-black rounded-sm px-4 py-1 transition-all duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">layers</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-widest">Grid</span>
+</a>
+</nav>
+</body></html>

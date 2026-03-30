@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhimma App — Product Roadmap 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #f36b1f;
+      --primary-light: #fff0e8;
+      --secondary: #5b7fff;
+      --bg: #f7f8fc;
+      --surface: #ffffff;
+      --text: #1a1d2e;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --critical: #ef4444;
+      --high: #f59e0b;
+      --medium: #3b82f6;
+      --low: #6b7280;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; }
+      .page-break { page-break-before: always; }
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: linear-gradient(135deg, #0b1326 0%, #1a2540 100%);
+      color: white;
+      padding: 48px 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .topbar::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(243,107,31,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .topbar-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(243,107,31,0.15);
+      border: 1px solid rgba(243,107,31,0.3);
+      color: var(--primary);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .topbar h1 {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .topbar h1 span { color: var(--primary); }
+    .topbar-meta {
+      display: flex;
+      gap: 28px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .topbar-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .topbar-meta-item .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+      font-weight: 600;
+    }
+    .topbar-meta-item .value {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ── PRINT BUTTON ── */
+    .print-btn {
+      position: fixed;
+      top: 20px; right: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 4px 14px rgba(243,107,31,0.4);
+      transition: all 0.2s;
+    }
+    .print-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(243,107,31,0.5); }
+
+    /* ── LAYOUT ── */
+    .wrapper { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+    /* ── SECTION TITLE ── */
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+    }
+    section { margin-bottom: 56px; }
+
+    /* ── OVERVIEW CARDS ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .overview-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .overview-card .icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .overview-card .stat {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .overview-card .label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── AUDIT ITEMS ── */
+    .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .audit-grid { grid-template-columns: 1fr; } }
+
+    .audit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .audit-card .card-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tag-critical { background: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; }
+    .tag-ux { background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; }
+    .tag-debt { background: #ede9fe; color: #5b21b6; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; }
+
+    .audit-item {
+      margin-bottom: 12px;
+      padding-left: 14px;
+      border-left: 3px solid var(--border);
+      font-size: 13.5px;
+    }
+    .audit-item strong { color: var(--text); font-weight: 700; }
+    .audit-item span { color: var(--text-muted); }
+
+    /* ── PHASE CARDS ── */
+    .phase { margin-bottom: 36px; }
+    .phase-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .phase-badge {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+    }
+    .phase-badge.p1 { background: #fee2e2; color: #dc2626; }
+    .phase-badge.p2 { background: #fef3c7; color: #d97706; }
+    .phase-badge.p3 { background: #dbeafe; color: #2563eb; }
+    .phase-badge.p4 { background: #d1fae5; color: #059669; }
+
+    .phase-info h3 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .phase-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .feature-list { display: flex; flex-direction: column; gap: 10px; }
+    .feature-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .feature-item-id {
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 800;
+      font-family: monospace;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-top: 1px;
+    }
+    .feature-item-body { flex: 1; }
+    .feature-item-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .feature-item-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .feature-badges {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .badge.critical { background: #fee2e2; color: #b91c1c; }
+    .badge.high     { background: #fef3c7; color: #92400e; }
+    .badge.medium   { background: #dbeafe; color: #1d4ed8; }
+    .badge.low      { background: #f3f4f6; color: #4b5563; }
+    .badge.trivial  { background: #d1fae5; color: #065f46; }
+    .badge.small    { background: #ede9fe; color: #5b21b6; }
+    .badge.large    { background: #fce7f3; color: #9d174d; }
+    .badge.effort   { background: #f0f9ff; color: #0369a1; }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: #f9fafb;
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafa; }
+    .priority-critical { color: #dc2626; font-weight: 800; }
+    .priority-high     { color: #d97706; font-weight: 700; }
+    .priority-medium   { color: #2563eb; font-weight: 600; }
+    .priority-low      { color: #9ca3af; font-weight: 500; }
+
+    /* ── QUESTIONS ── */
+    .question-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--secondary);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .question-item h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .question-item p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-pill">📊 Product Roadmap</div>
+  <h1>Muhimma <span>Mental Availability</span><br>Dashboard</h1>
+  <div class="topbar-meta">
+    <div class="topbar-meta-item">
+      <span class="label">Date</span>
+      <span class="value">March 29, 2026</span>
+    </div>
+    <div class="topbar-meta-item">
+      <span class="label">Version</span>
+      <span class="value">v1.1</span>
+    </div>
+    <div class="topbar-meta-item">
+      <span class="label">Prepared by</span>
+      <span class="value">Product Management</span>
+    </div>
+    <div class="topbar-meta-item">
+      <span class="label">Status</span>
+      <span class="value">🟡 Awaiting Approval</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- ── 1. OVERVIEW ── -->
+  <section>
+    <div class="section-label">Section 01</div>
+    <h2 class="section-title">Product Overview</h2>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="icon">📄</div>
+        <div class="stat">4</div>
+        <div class="label">App Screens</div>
+      </div>
+      <div class="overview-card">
+        <div class="icon">⚙️</div>
+        <div class="stat">3</div>
+        <div class="label">Core Metrics (MPen, NS, MMS)</div>
+      </div>
+      <div class="overview-card">
+        <div class="icon">🐛</div>
+        <div class="stat">3</div>
+        <div class="label">Critical Bugs Found</div>
+      </div>
+      <div class="overview-card">
+        <div class="icon">🚀</div>
+        <div class="stat">16</div>
+        <div class="label">Features Proposed</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--text-muted); line-height:1.8;">
+      Muhimma is a web-based Mental Availability analytics dashboard built on the <strong>Ehrenberg-Bass Institute</strong> framework. 
+      It enables brand researchers and marketers to upload raw survey data (Wide Text CSV) and instantly visualize key brand health metrics: 
+      Mental Penetration (MPen), Network Size (NS), and Mental Market Share (MMS).<br><br>
+      <strong>Tech Stack:</strong> React 19 · Vite 8 · TailwindCSS 3.4 · React Router v7 · PapaParse · Recharts 3.8
+    </p>
+  </section>
+
+  <!-- ── 2. AUDIT ── -->
+  <section>
+    <div class="section-label">Section 02</div>
+    <h2 class="section-title">Current State Audit — Issues & Gaps</h2>
+
+    <div class="audit-grid">
+      <div class="audit-card">
+        <div class="card-title"><span class="tag-critical">🔴 Critical Bugs</span></div>
+        <div class="audit-item">
+          <strong>Data loss on page refresh</strong><br>
+          <span>processedData lives only in React state. Any browser refresh wipes all imported data entirely.</span>
+        </div>
+        <div class="audit-item">
+          <strong>Orphaned /preview route</strong><br>
+          <span>The data preview step is disconnected from the bottom navigation — users cannot reach it normally.</span>
+        </div>
+        <div class="audit-item">
+          <strong>JSX typo in ExecutiveSummary</strong><br>
+          <span>Line 61 uses <code>class</code> instead of <code>className</code>, causing a silent React warning.</span>
+        </div>
+      </div>
+
+      <div class="audit-card">
+        <div class="card-title"><span class="tag-ux">🟡 UX Gaps</span></div>
+        <div class="audit-item">
+          <strong>No guided empty states</strong><br>
+          <span>Direct navigation to /brand-analysis without data shows a plain text message with no visual flow.</span>
+        </div>
+        <div class="audit-item">
+          <strong>Placeholder in Brand Analysis</strong><br>
+          <span>"Internal Penetration Trend" section is empty — Recharts is already installed but unused.</span>
+        </div>
+        <div class="audit-item">
+          <strong>CEP Grid % formula is incorrect</strong><br>
+          <span>Percentages show distribution within a single brand, not true penetration across all respondents.</span>
+        </div>
+        <div class="audit-item">
+          <strong>No brand normalization</strong><br>
+          <span>"Pepsi", "pepsi", "PEPSI" are counted as 3 separate brands.</span>
+        </div>
+      </div>
+
+      <div class="audit-card" style="grid-column: 1 / -1;">
+        <div class="card-title"><span class="tag-debt">🟣 Technical Debt</span></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+          <div class="audit-item">
+            <strong>4 Unused Components</strong><br>
+            <span>BrandStrengthMap.jsx, old CEPGrid.jsx, old DataImport.jsx, KPICards.jsx — all orphaned.</span>
+          </div>
+          <div class="audit-item">
+            <strong>No Test Runner</strong><br>
+            <span>test-parser.js and test-browser.js exist but aren't wired into any npm test script.</span>
+          </div>
+          <div class="audit-item">
+            <strong>Typo in Data Model</strong><br>
+            <span>"repondentsWithAtLeastOne" (missing 's') is used throughout two core library files.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. ROADMAP ── -->
+  <section>
+    <div class="section-label">Section 03</div>
+    <h2 class="section-title">Product Roadmap</h2>
+
+    <!-- Phase 1 -->
+    <div class="phase">
+      <div class="phase-header">
+        <div class="phase-badge p1">1</div>
+        <div class="phase-info">
+          <h3>Phase 1 — Stability & Data Integrity</h3>
+          <p>Week 1–2 · Goal: Make the current app production-ready by eliminating all critical bugs.</p>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-item-id">P1-01</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Session-based data persistence</div>
+            <div class="feature-item-desc">Store processedData in sessionStorage after parsing. On app mount, hydrate state from sessionStorage if available. Data survives page refreshes.</div>
+            <div class="feature-badges"><span class="badge critical">Critical</span><span class="badge small">Small effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P1-02</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Fix JSX class → className typo</div>
+            <div class="feature-item-desc">ExecutiveSummary.jsx line 61: correct the invalid HTML attribute that causes a silent React warning.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge trivial">Trivial</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P1-03</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Brand name normalization</div>
+            <div class="feature-item-desc">Auto-lowercase and trim all brand names during parsing. Add a post-import "Review Brands" step for manual merging of duplicates.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge effort">Medium effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P1-04</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Fix CEP Grid percentage formula</div>
+            <div class="feature-item-desc">Change formula from (count ÷ brand total) to (count ÷ total respondents) for true Mental Penetration per entry point.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge small">Small effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P1-05</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Clean up orphaned components & fix typo</div>
+            <div class="feature-item-desc">Remove / archive 4 unused components. Fix "repondentsWithAtLeastOne" typo across dataProcessor.js and metrics.js.</div>
+            <div class="feature-badges"><span class="badge low">Low</span><span class="badge trivial">Trivial</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase">
+      <div class="phase-header">
+        <div class="phase-badge p2">2</div>
+        <div class="phase-info">
+          <h3>Phase 2 — Visualization & Insights</h3>
+          <p>Week 3–5 · Goal: Transform numbers into actionable visuals using the already-installed Recharts library.</p>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-item-id">P2-01</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Executive Summary — KPI Bar Charts</div>
+            <div class="feature-item-desc">Replace static text values with mini Recharts BarCharts ranking brands by MMS, MPen, and NS with interactive tooltips.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge effort">Medium effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P2-02</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Brand Analysis — Radar / Spider Chart</div>
+            <div class="feature-item-desc">Replace the "Placeholder for Historical Data" section with a Recharts RadarChart of CEP strengths. Support 2-brand overlay comparison.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge effort">Medium effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P2-03</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">CEP Grid — True Heatmap with Legend & Sorting</div>
+            <div class="feature-item-desc">Add gradient color legend, row/column sorting by strength, and hover tooltips with exact count and percentage.</div>
+            <div class="feature-badges"><span class="badge medium">Medium</span><span class="badge effort">Medium effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P2-04</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Brand Comparison Page (New Screen)</div>
+            <div class="feature-item-desc">New /brand-comparison route. Side-by-side view of 2–3 selected brands with overlaid radar charts and bar chart comparisons.</div>
+            <div class="feature-badges"><span class="badge medium">Medium</span><span class="badge large">Large effort</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase">
+      <div class="phase-header">
+        <div class="phase-badge p3">3</div>
+        <div class="phase-info">
+          <h3>Phase 3 — Export & Collaboration</h3>
+          <p>Week 6–7 · Goal: Enable sharing results with stakeholders who don't access the app directly.</p>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-item-id">P3-01</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Export to Excel (.xlsx)</div>
+            <div class="feature-item-desc">One-click export of the Brand Performance Index table. Separate sheets for Summary, CEP Grid data, and Brand details.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge effort">Medium effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P3-02</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Export to PDF Report</div>
+            <div class="feature-item-desc">Generate a branded PDF with all dashboard visuals, date, and auto-generated insight bullets. Can be sent to clients directly.</div>
+            <div class="feature-badges"><span class="badge medium">Medium</span><span class="badge large">Large effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P3-03</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Shareable Read-Only Dashboard Link</div>
+            <div class="feature-item-desc">Encode processedData into a compressed URL or short-lived server link. Allow read-only viewing without re-uploading the CSV.</div>
+            <div class="feature-badges"><span class="badge low">Low</span><span class="badge large">Large effort</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase">
+      <div class="phase-header">
+        <div class="phase-badge p4">4</div>
+        <div class="phase-info">
+          <h3>Phase 4 — Advanced Analytics (v2.0)</h3>
+          <p>Week 8–12 · Goal: Elevate from a dashboard to a strategic decision-making platform.</p>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-item-id">P4-01</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Mental Advantage Gap Analysis</div>
+            <div class="feature-item-desc">Input actual market share data (Nielsen/Retail). Calculate Mental Advantage = MMS − Actual Share. Quadrant chart visualizing over/under-performing brands.</div>
+            <div class="feature-badges"><span class="badge high">High</span><span class="badge large">Large effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P4-02</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Historical Wave Tracking</div>
+            <div class="feature-item-desc">Support uploading multiple survey waves (Q1 vs Q3). Show trend lines for MPen, NS, and MMS over time per brand.</div>
+            <div class="feature-badges"><span class="badge medium">Medium</span><span class="badge large">Large effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P4-03</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">Multi-Format Data Support</div>
+            <div class="feature-item-desc">Support Long-Format CSV (row per respondent × CEP × brand). Auto-detect format on upload alongside the current Wide Text format.</div>
+            <div class="feature-badges"><span class="badge low">Low</span><span class="badge effort">Medium effort</span></div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-id">P4-04</span>
+          <div class="feature-item-body">
+            <div class="feature-item-title">AI-Powered Insights</div>
+            <div class="feature-item-desc">Auto-generate executive summary text from data. Flag statistical anomalies (e.g., high NS but low MPen). Suggest strategic recommendations.</div>
+            <div class="feature-badges"><span class="badge low">Low</span><span class="badge large">Large effort</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. PRIORITY TABLE ── -->
+  <section>
+    <div class="section-label">Section 04</div>
+    <h2 class="section-title">Priority Summary Table</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Feature</th>
+            <th>Phase</th>
+            <th>Priority</th>
+            <th>Effort</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>P1-01</code></td><td>Session-based data persistence</td><td>1</td><td class="priority-critical">CRITICAL</td><td>Small</td></tr>
+          <tr><td><code>P1-02</code></td><td>Fix class/className typo</td><td>1</td><td class="priority-high">HIGH</td><td>Trivial</td></tr>
+          <tr><td><code>P1-03</code></td><td>Brand name normalization</td><td>1</td><td class="priority-high">HIGH</td><td>Medium</td></tr>
+          <tr><td><code>P1-04</code></td><td>Fix CEP Grid percentage formula</td><td>1</td><td class="priority-high">HIGH</td><td>Small</td></tr>
+          <tr><td><code>P1-05</code></td><td>Clean up orphaned components & typo fix</td><td>1</td><td class="priority-low">LOW</td><td>Trivial</td></tr>
+          <tr><td><code>P2-01</code></td><td>Executive Summary — KPI bar charts</td><td>2</td><td class="priority-high">HIGH</td><td>Medium</td></tr>
+          <tr><td><code>P2-02</code></td><td>Brand Analysis — Radar chart</td><td>2</td><td class="priority-high">HIGH</td><td>Medium</td></tr>
+          <tr><td><code>P2-03</code></td><td>CEP Grid — Heatmap improvements</td><td>2</td><td class="priority-medium">MEDIUM</td><td>Medium</td></tr>
+          <tr><td><code>P2-04</code></td><td>Brand Comparison page (new screen)</td><td>2</td><td class="priority-medium">MEDIUM</td><td>Large</td></tr>
+          <tr><td><code>P3-01</code></td><td>Export to Excel (.xlsx)</td><td>3</td><td class="priority-high">HIGH</td><td>Medium</td></tr>
+          <tr><td><code>P3-02</code></td><td>Export to PDF report</td><td>3</td><td class="priority-medium">MEDIUM</td><td>Large</td></tr>
+          <tr><td><code>P3-03</code></td><td>Shareable read-only link</td><td>3</td><td class="priority-low">LOW</td><td>Large</td></tr>
+          <tr><td><code>P4-01</code></td><td>Mental Advantage Gap analysis</td><td>4</td><td class="priority-high">HIGH</td><td>Large</td></tr>
+          <tr><td><code>P4-02</code></td><td>Historical wave tracking</td><td>4</td><td class="priority-medium">MEDIUM</td><td>Large</td></tr>
+          <tr><td><code>P4-03</code></td><td>Multi-format data support</td><td>4</td><td class="priority-low">LOW</td><td>Medium</td></tr>
+          <tr><td><code>P4-04</code></td><td>AI-powered insights</td><td>4</td><td class="priority-low">LOW</td><td>Large</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 5. OPEN QUESTIONS ── -->
+  <section>
+    <div class="section-label">Section 05</div>
+    <h2 class="section-title">Open Questions for Stakeholders</h2>
+
+    <div class="question-item">
+      <h4>① Target Audience</h4>
+      <p>Is the primary user a <strong>professional researcher</strong> who needs raw data tables and a fast workflow, or a <strong>Brand Manager</strong> who needs high-level executive visuals and export-ready reports? This determines whether we prioritize Phase 3 (Export) or Phase 2 (Visualizations) first.</p>
+    </div>
+    <div class="question-item">
+      <h4>② Brand Normalization Approach</h4>
+      <p>Should we use <strong>automatic fuzzy matching</strong> (e.g., "Pepsy" auto-corrects to "Pepsi") or a <strong>manual merge UI</strong> where the user decides? Automatic matching risks false merges in niche or regional brand datasets.</p>
+    </div>
+    <div class="question-item">
+      <h4>③ Data Format Strategy</h4>
+      <p>Should we enforce the <strong>Wide Text CSV format exclusively</strong> (simpler, faster), or invest in supporting SPSS exports and Long-Format CSV? Supporting more formats broadens the audience but increases parsing complexity significantly.</p>
+    </div>
+    <div class="question-item">
+      <h4>④ Deployment Architecture</h4>
+      <p>Is this intended to remain a <strong>client-side-only tool</strong> (no backend, CSV never leaves the browser), or should we plan for a <strong>backend server</strong> to enable shareable links, saved projects, and user accounts? This is a foundational decision that affects Phase 3 and 4.</p>
+    </div>
+  </section>
+
+  <div class="doc-footer">
+    <p><strong>Muhimma Mental Availability Dashboard</strong> · Product Roadmap v1.1</p>
+    <p style="margin-top:6px;">March 29, 2026 · Prepared by Product Management · Confidential</p>
+  </div>
+
+</div>
+</body>
+</html>

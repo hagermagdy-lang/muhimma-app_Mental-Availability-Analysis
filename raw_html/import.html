@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#c0c1ff",
+              "on-secondary-container": "#00515d",
+              "surface-bright": "#31394d",
+              "primary-fixed": "#e1e0ff",
+              "primary-container": "#8083ff",
+              "outline-variant": "#464554",
+              "outline": "#908fa0",
+              "inverse-surface": "#dae2fd",
+              "on-tertiary-fixed": "#002113",
+              "on-error": "#690005",
+              "secondary-container": "#00cbe6",
+              "surface-dim": "#0b1326",
+              "on-background": "#dae2fd",
+              "on-primary": "#1000a9",
+              "tertiary": "#4edea3",
+              "on-surface-variant": "#c7c4d7",
+              "on-error-container": "#ffdad6",
+              "surface": "#0b1326",
+              "error-container": "#93000a",
+              "primary": "#c0c1ff",
+              "background": "#0b1326",
+              "tertiary-fixed": "#6ffbbe",
+              "inverse-on-surface": "#283044",
+              "error": "#ffb4ab",
+              "on-primary-container": "#0d0096",
+              "surface-container-high": "#222a3d",
+              "secondary-fixed": "#a2eeff",
+              "on-secondary-fixed-variant": "#004e5a",
+              "secondary": "#5de6ff",
+              "on-primary-fixed": "#07006c",
+              "inverse-primary": "#494bd6",
+              "secondary-fixed-dim": "#2fd9f4",
+              "surface-container-lowest": "#060e20",
+              "on-tertiary-container": "#000703",
+              "on-secondary-fixed": "#001f25",
+              "tertiary-fixed-dim": "#4edea3",
+              "surface-variant": "#2d3449",
+              "on-tertiary": "#003824",
+              "on-surface": "#dae2fd",
+              "on-secondary": "#00363e",
+              "surface-container-highest": "#2d3449",
+              "on-tertiary-fixed-variant": "#005236",
+              "surface-tint": "#c0c1ff",
+              "tertiary-container": "#00885d",
+              "surface-container": "#171f33",
+              "surface-container-low": "#131b2e",
+              "on-primary-fixed-variant": "#2f2ebe"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body antialiased selection:bg-primary/30 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0b1326]/85 backdrop-blur-xl shadow-[0px_0px_40px_rgba(0,0,0,0.08)] flex items-center justify-between px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#c0c1ff]" style="font-size: 24px;">analytics</span>
+<h1 class="text-[#c0c1ff] font-bold text-lg tracking-tighter">The Modern Analyst</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-8 font-['Inter'] font-semibold tracking-tight text-sm">
+<a class="text-[#5de6ff] transition-colors" href="#">Upload</a>
+<a class="text-[#c0c1ff]/60 hover:bg-[#161e31] transition-colors px-2 py-1 rounded" href="#">Dashboard</a>
+<a class="text-[#c0c1ff]/60 hover:bg-[#161e31] transition-colors px-2 py-1 rounded" href="#">Analysis</a>
+<a class="text-[#c0c1ff]/60 hover:bg-[#161e31] transition-colors px-2 py-1 rounded" href="#">CEP Grid</a>
+</nav>
+<button class="material-symbols-outlined text-[#c0c1ff]/60 hover:bg-[#161e31] p-2 rounded transition-colors active:scale-95 duration-150">settings</button>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center px-6 pt-24 pb-32">
+<div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Side: Title & Context -->
+<div class="lg:col-span-5 space-y-6">
+<div>
+<span class="text-secondary font-mono text-[10px] tracking-[0.2em] uppercase mb-2 block">System / Intake</span>
+<h2 class="text-4xl font-extrabold tracking-tighter text-on-surface leading-tight">Data Import</h2>
+<p class="text-on-surface-variant mt-4 leading-relaxed text-sm">
+                        Ingest raw quantitative datasets for precision processing. Our engine automatically normalizes tabular structures for advanced CEP modeling.
+                    </p>
+</div>
+<div class="bg-surface-container-low p-5 rounded-lg border-l-2 border-primary">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">info</span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Calculation Engine</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                        Data is validated against ISO-20022 telemetry standards. Outliers are flagged using the interquartile range (IQR) method.
+                    </p>
+<button class="mt-4 text-[10px] font-bold uppercase tracking-widest text-secondary flex items-center gap-2 hover:opacity-80 transition-opacity">
+                        View Logic
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Right Side: Dropzone & Progress -->
+<div class="lg:col-span-7 space-y-4 w-full">
+<!-- Dropzone -->
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+<div class="relative bg-surface-container-high border-2 border-dashed border-outline-variant hover:border-secondary/50 transition-all cursor-pointer rounded-xl p-12 flex flex-col items-center justify-center text-center">
+<div class="bg-surface-container-highest p-4 rounded-full mb-6">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+</div>
+<h3 class="text-lg font-semibold text-on-surface">Drag and drop or browse files</h3>
+<p class="text-on-surface-variant text-sm mt-2">Maximum file size: 256MB</p>
+<div class="mt-8 flex gap-3">
+<div class="px-3 py-1 bg-surface-container-lowest rounded text-[10px] font-mono text-secondary border border-secondary/20">.CSV</div>
+<div class="px-3 py-1 bg-surface-container-lowest rounded text-[10px] font-mono text-secondary border border-secondary/20">.XLSX</div>
+</div>
+</div>
+</div>
+<!-- Simulation Progress -->
+<div class="bg-surface-container-low p-6 rounded-xl space-y-4">
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Active Task</span>
+<h4 class="text-sm font-medium text-on-surface">Parsing respondents...</h4>
+</div>
+<span class="text-xs font-mono text-secondary">64%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[64%] shadow-[0_0_12px_rgba(93,230,255,0.4)]"></div>
+</div>
+<div class="flex items-center justify-between text-[10px] text-on-surface-variant font-mono">
+<span>ENTRIES: 12,402 / 19,377</span>
+<span>EST. TIME: 4s</span>
+</div>
+</div>
+<!-- Secondary Actions -->
+<div class="flex items-center justify-between pt-2">
+<button class="text-xs text-on-surface-variant hover:text-on-surface flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">history</span>
+                        Recent Uploads
+                    </button>
+<div class="flex gap-4">
+<button class="px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors">
+                            Cancel
+                        </button>
+<button class="px-6 py-2.5 bg-gradient-to-br from-primary to-primary-container text-on-primary-container text-[10px] font-bold uppercase tracking-[0.1em] rounded shadow-lg active:scale-95 duration-150">
+                            Confirm Import
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0b1326]/85 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.2)] flex justify-around items-center h-20 w-full px-4 pb-safe">
+<a class="flex flex-col items-center justify-center text-[#5de6ff] bg-[#161e31] rounded-lg py-1 px-3 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-1 px-3 hover:text-[#5de6ff] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-1 px-3 hover:text-[#5de6ff] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-1 px-3 hover:text-[#5de6ff] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">CEP Grid</span>
+</a>
+</nav>
+<!-- Visual Decor / Precision Lens Aesthetic -->
+<div class="fixed top-1/4 -left-20 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="fixed bottom-1/4 -right-20 w-96 h-96 bg-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
+</body></html>
