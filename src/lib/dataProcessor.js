@@ -20,15 +20,8 @@ export function parseSurveyData(dataArray) {
       continue;
     }
     
-    // Split by dash to remove instructions
-    let cleanH = rawH.split('-')[0].trim();
-    
-    // Truncate to 5 words if exceeding
-    const words = cleanH.split(/\s+/);
-    if (words.length > 5) {
-      cleanH = words.slice(0, 5).join(' ') + '...';
-    }
-    
+    const cleanH = rawH.trim();
+
     cepsMapping.push(cleanH);
     cepsSet.add(cleanH);
   }

@@ -6,25 +6,19 @@ export default function Layout({ processedData }) {
   const currentPath = location.pathname;
 
   return (
-    <div className="bg-background text-on-background min-h-screen pb-24 pt-16 dark">
+    <div className="bg-background text-on-background min-h-screen pb-24 pt-20 dark">
       {/* TopAppBar */}
-      <header className="fixed top-0 w-full z-50 bg-[#0b1326]/85 backdrop-blur-xl shadow-[0px_0px_40px_rgba(0,0,0,0.08)]">
-        <div className="flex items-center justify-between px-6 h-16 w-full">
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
-            <h1 className="text-primary font-bold text-lg tracking-tighter">The Modern Analyst</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="font-['Inter'] font-semibold tracking-tight text-sm text-primary hidden md:inline-block">Mental Availability Dashboard</span>
-            <button className="active:scale-95 duration-150 hover:bg-[#161e31] transition-colors p-2 rounded-lg">
-              <span className="material-symbols-outlined text-primary" data-icon="settings">settings</span>
-            </button>
+      <header className="fixed top-0 w-full z-50 bg-[#0b1326]/95 backdrop-blur-xl border-b border-outline-variant/10">
+        <div className="flex items-center px-6 h-20 w-full max-w-7xl mx-auto">
+          <div className="flex flex-col justify-center gap-0.5">
+            <h1 className="text-primary font-black text-2xl tracking-tight leading-none">Muhimmaapp Analytics</h1>
+            <span className="text-on-surface-variant text-sm font-medium tracking-wide">Mental Availability Analysis</span>
           </div>
         </div>
       </header>
       
       {/* Centered Desktop Layout Container (Requested by User) */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-4" style={{paddingTop: '1.5rem'}}>
         <Outlet context={{ processedData }} />
       </div>
 
@@ -32,24 +26,20 @@ export default function Layout({ processedData }) {
       <nav className="fixed bottom-0 w-full z-50 bg-[#0b1326]/85 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.2)]">
         <div className="flex justify-around items-center h-20 w-full px-4 pb-safe max-w-7xl mx-auto">
           
-          <Link to="/" className={`flex flex-col items-center justify-center py-1 px-3 transition-all active:scale-90 duration-200 ${currentPath === '/' ? 'text-secondary bg-[#161e31] rounded-lg' : 'text-slate-500 hover:text-secondary'}`}>
-            <span className="material-symbols-outlined" data-icon="upload_file">upload_file</span>
-            <span className="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Upload</span>
+          <Link to="/" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
+            Data Upload
           </Link>
-          
-          <Link to="/executive-summary" className={`flex flex-col items-center justify-center py-1 px-3 transition-all active:scale-90 duration-200 ${currentPath === '/executive-summary' ? 'text-secondary bg-[#161e31] rounded-lg' : 'text-slate-500 hover:text-secondary'}`}>
-            <span className="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-            <span className="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Dashboard</span>
+
+          <Link to="/executive-summary" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/executive-summary' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
+            Overview
           </Link>
-          
-          <Link to="/brand-analysis" className={`flex flex-col items-center justify-center py-1 px-3 transition-all active:scale-90 duration-200 ${currentPath === '/brand-analysis' ? 'text-secondary bg-[#161e31] rounded-lg' : 'text-slate-500 hover:text-secondary'}`}>
-            <span className="material-symbols-outlined" data-icon="query_stats" style={{fontVariationSettings: currentPath==='/brand-analysis' ? "'FILL' 1" : undefined}}>query_stats</span>
-            <span className="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Analysis</span>
+
+          <Link to="/brand-analysis" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/brand-analysis' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
+            Brand Analysis
           </Link>
-          
-          <Link to="/cep-grid" className={`flex flex-col items-center justify-center py-1 px-3 transition-all active:scale-90 duration-200 ${currentPath === '/cep-grid' ? 'text-secondary bg-[#161e31] rounded-lg' : 'text-slate-500 hover:text-secondary'}`}>
-            <span className="material-symbols-outlined" data-icon="grid_view">grid_view</span>
-            <span className="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">CEP Grid</span>
+
+          <Link to="/cep-grid" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/cep-grid' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
+            CEP Map
           </Link>
 
         </div>

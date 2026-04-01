@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 'recharts';
 import { calculateMetrics } from '../lib/metrics';
+import MetricInfo from '../components/MetricInfo';
 
 export default function BrandAnalysis() {
   const { processedData } = useOutletContext();
@@ -26,7 +27,7 @@ export default function BrandAnalysis() {
   }
 
   const currentMetric = metrics.find(m => m.brand === selectedBrand) || metrics[0];
-  const { ceps, summary } = processedData;
+  const { summary } = processedData;
 
   // Compute CEP strength breakdown for the current brand
   const bData = summary[currentMetric.brand];
@@ -43,6 +44,7 @@ export default function BrandAnalysis() {
   const avgPen = metrics.reduce((sum,m)=>sum+m.mPen, 0) / metrics.length;
   const avgNs = metrics.reduce((sum,m)=>sum+m.networkSize, 0) / metrics.length;
   const maxNs = Math.max(...metrics.map(m => m.networkSize));
+  const avgMms = metrics.reduce((sum,m)=>sum+m.mms, 0) / metrics.length;
 
   const chartData = [...metrics]
     .sort((a, b) => b.mPen - a.mPen)
@@ -88,7 +90,7 @@ export default function BrandAnalysis() {
           <div className="bg-surface-container p-6 rounded-sm flex flex-col justify-between border border-outline-variant/10">
             <div>
               <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Network Size</p>
-              <h3 className="text-3xl font-black text-on-surface italic uppercase">{currentMetric.networkSize.toFixed(2)} Nodes</h3>
+              <h3 className="text-3xl font-black text-on-surface italic uppercase">{currentMetric.networkSize.toFixed(2)} avg links</h3>
             </div>
             <div className="h-1 w-full bg-surface-container-highest rounded-full mt-6">
               <div className="h-full bg-primary rounded-full shadow-[0_0_12px_rgba(243,107,31,0.5)]" style={{ width: `${maxNs > 0 ? Math.min((currentMetric.networkSize / maxNs) * 100, 100) : 0}%` }}></div>
@@ -97,15 +99,15 @@ export default function BrandAnalysis() {
           
           <div className="bg-surface-container p-6 rounded-sm flex flex-col justify-between border border-outline-variant/10">
             <div>
-              <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Market Sentiment</p>
+              <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em] mb-1">MMS Position</p>
               <h3 className="text-3xl font-black text-on-surface italic uppercase">
-                {currentMetric.mms > 20 ? 'Strong Positive' : currentMetric.mms > 10 ? 'Stable' : 'Vulnerable'}
+                {currentMetric.mms >= avgMms * 1.2 ? 'Strong' : currentMetric.mms >= avgMms * 0.8 ? 'Stable' : 'Vulnerable'}
               </h3>
             </div>
             <div className="flex gap-1.5 mt-6">
               <div className="h-5 w-full bg-primary/20 rounded-sm"></div>
-              <div className={`h-5 w-full ${currentMetric.mms > 10 ? 'bg-primary/50' : 'bg-surface-container'} rounded-sm`}></div>
-              <div className={`h-5 w-full ${currentMetric.mms > 20 ? 'bg-primary' : 'bg-surface-container'} rounded-sm`}></div>
+              <div className={`h-5 w-full ${currentMetric.mms >= avgMms * 0.8 ? 'bg-primary/50' : 'bg-surface-container'} rounded-sm`}></div>
+              <div className={`h-5 w-full ${currentMetric.mms >= avgMms * 1.2 ? 'bg-primary' : 'bg-surface-container'} rounded-sm`}></div>
             </div>
           </div>
         </div>
@@ -114,9 +116,8 @@ export default function BrandAnalysis() {
       {/* Key Metrics Bento Grid */}
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
-          <div className="flex justify-between items-start mb-4">
-            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Mental Pen.</p>
-            <span className="material-symbols-outlined text-primary text-lg">psychology</span>
+          <div className="mb-4">
+            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest inline-flex items-center">Mental Penetration<MetricInfo text="% of all respondents who linked this brand to at least one CEP. Higher = more people have this brand in mind." /></p>
           </div>
           <div className="flex flex-col">
             <span className="text-3xl font-black italic tracking-tighter">{currentMetric.mPen.toFixed(1)}%</span>
@@ -127,9 +128,8 @@ export default function BrandAnalysis() {
         </div>
 
         <div className="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
-          <div className="flex justify-between items-start mb-4">
-            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Network</p>
-            <span className="material-symbols-outlined text-primary text-lg">hub</span>
+          <div className="mb-4">
+            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest inline-flex items-center">Network Size<MetricInfo text="Average number of CEPs linked to this brand by those who mentioned it. Higher = richer, broader mental associations." /></p>
           </div>
           <div className="flex flex-col">
             <span className="text-3xl font-black italic tracking-tighter">{currentMetric.networkSize.toFixed(2)}</span>
@@ -140,9 +140,8 @@ export default function BrandAnalysis() {
         </div>
 
         <div className="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
-          <div className="flex justify-between items-start mb-4">
-            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Market Share</p>
-            <span className="material-symbols-outlined text-primary text-lg">pie_chart</span>
+          <div className="mb-4">
+            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest inline-flex items-center">Mental Market Share<MetricInfo text="This brand's share of all associations in the category. A proxy for dominance of mental space relative to all competitors." /></p>
           </div>
           <div className="flex flex-col">
             <span className="text-3xl font-black italic tracking-tighter">{currentMetric.mms.toFixed(1)}%</span>
@@ -150,9 +149,8 @@ export default function BrandAnalysis() {
         </div>
         
         <div className="bg-surface-container p-5 rounded-sm border border-outline-variant/10">
-          <div className="flex justify-between items-start mb-4">
-            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest">Associations</p>
-            <span className="material-symbols-outlined text-primary text-lg">visibility</span>
+          <div className="mb-4">
+            <p className="text-on-surface-variant text-[9px] font-bold uppercase tracking-widest inline-flex items-center">Associations<MetricInfo text="Total number of times this brand was mentioned across all respondents and all CEPs in this dataset." /></p>
           </div>
           <div className="flex flex-col">
             <span className="text-3xl font-black italic tracking-tighter">{bData.totalAssociations}</span>
