@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "loginUser": "test@example.com",
+  "loginPassword": "123456abc",
+  "executionArgs": {
+    "projectName": "muhimma-app",
+    "projectPath": "C:/Users/Hager Magdy/Downloads/muhimma-app",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-SgLK_2NJeCAeEN2tUOLB9TKiJCgrqWP7KN0GBzwnNX26G5Am1cycrBqHG4kjwAAniK8RDlaspPc1k_8heyaB5s0d0GF_S2MsCzndkIo8o0i6JTHUMxoc0iEb0sFyW3bMlgQ"
+    }
+  },
+  "serverPort": 62691,
+  "proxy": "http://a8bce4cf-ff01-4577-ac1a-c25eca671d7f:bu8UnmgQ9MrdDpLHPEXhXKYDeRVerJbJ@tun.testsprite.com:8080"
+}

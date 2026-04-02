@@ -19,6 +19,10 @@ export default function DataImport({ onDataProcessed, processedData }) {
       skipEmptyLines: true,
       complete: function(results) {
         try {
+          const criticalErrors = results.errors.filter(e => e.type !== 'FieldMismatch');
+          if (criticalErrors.length > 0) {
+            throw new Error(`Invalid CSV format: ${criticalErrors[0].message} (row ${criticalErrors[0].row ?? '?'})`);
+          }
           const processed = parseSurveyData(results.data);
           onDataProcessed(processed);
         } catch (err) {

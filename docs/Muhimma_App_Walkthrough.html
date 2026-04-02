@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhimmaapp Analytics — Project Walkthrough</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #f36b1f;
+      --secondary: #5b7fff;
+      --bg: #f7f8fc;
+      --surface: #ffffff;
+      --text: #1a1d2e;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    @media print { .no-print { display: none !important; } body { background: white; } }
+
+    /* TOP BAR */
+    .topbar {
+      background: linear-gradient(135deg, #0b1326 0%, #1a2540 100%);
+      color: white; padding: 48px 60px 40px; position: relative; overflow: hidden;
+    }
+    .topbar::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(243,107,31,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(243,107,31,0.15); border: 1px solid rgba(243,107,31,0.3);
+      color: var(--primary); padding: 4px 14px; border-radius: 999px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 18px;
+    }
+    .topbar h1 { font-size: 38px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 10px; }
+    .topbar h1 span { color: var(--primary); }
+    .topbar p { color: rgba(255,255,255,0.6); font-size: 15px; max-width: 560px; }
+    .topbar-meta { display: flex; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
+    .meta-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); font-weight: 600; }
+    .meta-item .value { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+    /* PRINT BTN */
+    .print-btn {
+      position: fixed; top: 20px; right: 20px;
+      background: var(--primary); color: white; border: none;
+      padding: 10px 22px; border-radius: 8px; font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 700; cursor: pointer; z-index: 100;
+      box-shadow: 0 4px 14px rgba(243,107,31,0.4); transition: all 0.2s;
+    }
+    .print-btn:hover { transform: translateY(-1px); }
+
+    /* LAYOUT */
+    .wrapper { max-width: 900px; margin: 0 auto; padding: 52px 32px 80px; }
+    section { margin-bottom: 60px; }
+    .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); font-weight: 800; margin-bottom: 6px; }
+    .section-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
+
+    /* SCREEN CARDS */
+    .screen-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px; margin-bottom: 18px;
+      position: relative; overflow: hidden;
+    }
+    .screen-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px;
+    }
+    .screen-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .screen-num {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #fff0e8; color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; flex-shrink: 0;
+    }
+    .screen-info h3 { font-size: 17px; font-weight: 800; }
+    .screen-info .route { font-size: 12px; color: var(--muted); font-family: monospace; margin-top: 2px; }
+    .screen-body { font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .screen-body ul { margin: 10px 0 0 18px; }
+    .screen-body li { margin-bottom: 6px; }
+    .screen-body strong { color: var(--text); }
+    .note {
+      margin-top: 14px; padding: 10px 14px; background: #fff8f3;
+      border: 1px solid #fde4cc; border-radius: 8px;
+      font-size: 12.5px; color: #92400e;
+    }
+
+    /* METRICS TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    th { background: #f9fafb; padding: 12px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-align: left; border-bottom: 1px solid var(--border); }
+    td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafa; }
+    td:first-child { font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+    /* CODE BLOCK */
+    pre { background: #0b1326; color: #e2e8f0; padding: 20px 24px; border-radius: 10px; font-size: 13px; line-height: 1.7; overflow-x: auto; margin-top: 16px; }
+    code { font-family: 'Courier New', monospace; }
+
+    /* LIMITATIONS TABLE */
+    .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .badge.p1 { background: #fee2e2; color: #b91c1c; }
+    .badge.p2 { background: #fef3c7; color: #92400e; }
+    .badge.p3 { background: #dbeafe; color: #1d4ed8; }
+
+    /* FILE TREE */
+    .tree { background: #0b1326; color: #94a3b8; padding: 24px; border-radius: 12px; font-family: monospace; font-size: 13px; line-height: 2; }
+    .tree .folder { color: #f36b1f; font-weight: 700; }
+    .tree .file { color: #e2e8f0; }
+    .tree .comment { color: #475569; }
+
+    /* FOOTER */
+    .doc-footer { text-align: center; padding: 32px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 48px; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<div class="topbar">
+  <div class="pill">📖 Project Walkthrough</div>
+  <h1>Muhimmaapp <span>Analytics</span></h1>
+  <p>A complete guide to understanding, using, and extending the Mental Availability dashboard.</p>
+  <div class="topbar-meta">
+    <div class="meta-item"><div class="label">Version</div><div class="value">1.0</div></div>
+    <div class="meta-item"><div class="label">Date</div><div class="value">March 31, 2026</div></div>
+    <div class="meta-item"><div class="label">Screens</div><div class="value">5 Pages</div></div>
+    <div class="meta-item"><div class="label">Audience</div><div class="value">Team & Developers</div></div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- WHAT IS IT -->
+  <section>
+    <div class="section-label">Overview</div>
+    <h2 class="section-title">What Is Muhimmaapp Analytics?</h2>
+    <p style="font-size:15px; color:var(--muted); line-height:1.9; max-width:720px;">
+      Muhimmaapp Analytics is a browser-based tool that transforms raw consumer survey data into instant brand health insights using the <strong style="color:var(--text)">Mental Availability framework</strong> from the Ehrenberg-Bass Institute.<br><br>
+      Upload a CSV → the app automatically calculates <strong style="color:var(--text)">Mental Penetration, Network Size, and Mental Market Share</strong> for every brand in your category — displayed across 5 interactive screens, including an AI-powered analyst. No Excel, no manual calculations, no backend server. Everything runs inside the browser.
+    </p>
+  </section>
+
+  <!-- THE 4 SCREENS -->
+  <section>
+    <div class="section-label">Section 01</div>
+    <h2 class="section-title">The 5 Screens</h2>
+
+    <div class="screen-card">
+      <div class="screen-header">
+        <div class="screen-num">1</div>
+        <div class="screen-info">
+          <h3>📥 Import — Data Upload</h3>
+          <div class="route">Route: /</div>
+        </div>
+      </div>
+      <div class="screen-body">
+        The starting point. Users drag-and-drop or browse for a <code>.CSV</code> survey file.
+        <ul>
+          <li>Accepts Wide Text CSV format (columns = CEPs, cells = brand names)</li>
+          <li>PapaParse reads the file entirely in the browser — no data is sent to any server</li>
+          <li>After upload, a preview screen shows the detected brands and CEPs</li>
+          <li>User confirms to proceed to the dashboard</li>
+        </ul>
+        <div class="note">⚠️ <strong>Known issue:</strong> Data is lost on page refresh. A fix using sessionStorage is planned in Phase 1 of the roadmap.</div>
+      </div>
+    </div>
+
+    <div class="screen-card">
+      <div class="screen-header">
+        <div class="screen-num">2</div>
+        <div class="screen-info">
+          <h3>📊 Summary — Executive Dashboard</h3>
+          <div class="route">Route: /executive-summary</div>
+        </div>
+      </div>
+      <div class="screen-body">
+        High-level view of all brands ranked by Mental Market Share (MMS).
+        <ul>
+          <li><strong>Avg Category MPen</strong> — average penetration across all brands</li>
+          <li><strong>Average Network Size</strong> — avg CEPs linked per respondent</li>
+          <li><strong>Total Respondents</strong> — count of survey rows processed</li>
+          <li><strong>Brand Performance Table</strong> — all brands sorted by MMS with inline progress bars for MPen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="screen-card">
+      <div class="screen-header">
+        <div class="screen-num">3</div>
+        <div class="screen-info">
+          <h3>🏷️ Brands — Brand Deep Dive</h3>
+          <div class="route">Route: /brand-analysis</div>
+        </div>
+      </div>
+      <div class="screen-body">
+        Deep-dive into any single brand selected from a dropdown.
+        <ul>
+          <li>Hero number: brand's Mental Penetration %</li>
+          <li>Network Size score with a visual strength bar</li>
+          <li>Market Sentiment label: Strong Positive / Stable / Vulnerable</li>
+          <li>Comparison vs. category average for MPen and NS</li>
+          <li>Top 4 CEPs for the brand shown as percentage bars</li>
+        </ul>
+        <div class="note">⚠️ The "Internal Penetration Trend" area is currently a placeholder. A Recharts radar chart is planned for Phase 2.</div>
+      </div>
+    </div>
+
+    <div class="screen-card">
+      <div class="screen-header">
+        <div class="screen-num">4</div>
+        <div class="screen-info">
+          <h3>🗺️ CEP Grid — Heatmap Matrix</h3>
+          <div class="route">Route: /cep-grid</div>
+        </div>
+      </div>
+      <div class="screen-body">
+        A full heatmap where rows = brands and columns = CEPs. Each cell shows the association strength.
+        <ul>
+          <li>Darker cell = stronger brand–CEP association</li>
+          <li>Color alternates between primary (orange) and secondary (blue) per brand row</li>
+          <li>Bottom widgets: total CEPs, total data points, dominant brand</li>
+          <li>Export CSV button (UI only — functionality coming in Phase 3)</li>
+        </ul>
+        <div class="note">⚠️ <strong>Formula issue:</strong> Percentages currently show distribution <em>within</em> a brand, not true penetration across all respondents. This is a planned Phase 1 fix.</div>
+      </div>
+    </div>
+
+    <div class="screen-card">
+      <div class="screen-header">
+        <div class="screen-num">5</div>
+        <div class="screen-info">
+          <h3>🤖 AI Analyst — Automated Brand Insights</h3>
+          <div class="route">Route: /ai-insights</div>
+        </div>
+      </div>
+      <div class="screen-body">
+        Generates strategic brand intelligence using a local Ollama (Llama 3) instance. Analyzes your uploaded data and produces a written summary.
+        <ul>
+          <li><strong>Statistical Anomalies</strong> — highlights unusual metric patterns (e.g., high penetration but low network size)</li>
+          <li><strong>Marketing Strategy</strong> — recommends specific growth actions for top brands</li>
+          <li>Runs entirely locally via Ollama — no data leaves your machine</li>
+          <li>Results appear as a single formatted block after inference completes</li>
+        </ul>
+        <div class="note">⚠️ <strong>Requires Ollama running locally.</strong> Set <code>OLLAMA_ORIGINS="*"</code> in PowerShell before starting Ollama to allow browser access.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY METRICS -->
+  <section>
+    <div class="section-label">Section 02</div>
+    <h2 class="section-title">Key Metrics Explained</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Formula</th><th>What It Means</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mental Penetration (MPen)</td>
+            <td>Respondents who mentioned the brand ÷ Total respondents × 100</td>
+            <td>The % of the market that has the brand in mind. The most important top-line metric.</td>
+          </tr>
+          <tr>
+            <td>Network Size (NS)</td>
+            <td>Total brand associations ÷ Respondents who mentioned the brand</td>
+            <td>How many buying situations (CEPs) the brand is mentally linked to, on average, per person who knows it.</td>
+          </tr>
+          <tr>
+            <td>Mental Market Share (MMS)</td>
+            <td>Brand total associations ÷ All category associations × 100</td>
+            <td>The brand's share of all mental connections in the category. Comparable to traditional market share but measured in minds.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CSV FORMAT -->
+  <section>
+    <div class="section-label">Section 03</div>
+    <h2 class="section-title">CSV Format Guide</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:16px;">The app expects a <strong style="color:var(--text)">Wide Text</strong> format. Each column is a CEP, each row is a respondent, each cell is the brand(s) they mentioned for that CEP.</p>
+    <pre><code>Respondent ID, When I'm celebrating..., When I'm tired..., When I'm at work...
+R001,          Pepsi,                   Nescafe,           Red Bull
+R002,          Coca-Cola,               Pepsi,             Nescafe
+R003,          Pepsi,                   Red Bull,
+R004,          ,                        Nescafe,           Pepsi</code></pre>
+    <ul style="margin: 18px 0 0 20px; font-size:14px; color:var(--muted); line-height:2;">
+      <li>Row 1 = CEP column headers (long phrases are auto-trimmed to 5 words)</li>
+      <li>Column 0 = Respondent ID (ignored in calculations)</li>
+      <li>Multiple brands in one cell: separate with a comma <code>Pepsi, Coca-Cola</code></li>
+      <li>Empty cell = no association for that CEP/respondent (perfectly valid)</li>
+    </ul>
+  </section>
+
+  <!-- LIMITATIONS -->
+  <section>
+    <div class="section-label">Section 04</div>
+    <h2 class="section-title">Known Limitations</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Issue</th><th>Impact</th><th>Fix Planned</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Data lost on page refresh</td><td>Must re-upload CSV every session</td><td><span class="badge p1">Phase 1</span></td></tr>
+          <tr><td>No brand normalization</td><td>"Pepsi" and "pepsi" counted as different brands</td><td><span class="badge p1">Phase 1</span></td></tr>
+          <tr><td>CEP Grid % formula incorrect</td><td>Shows within-brand distribution, not true penetration</td><td><span class="badge p1">Phase 1</span></td></tr>
+          <tr><td>No chart on Brand Analysis</td><td>Trend section shows placeholder only</td><td><span class="badge p2">Phase 2</span></td></tr>
+          <tr><td>No data export</td><td>Cannot download results as Excel or PDF</td><td><span class="badge p3">Phase 3</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FILE STRUCTURE -->
+  <section>
+    <div class="section-label">Section 05</div>
+    <h2 class="section-title">File Structure (For Developers)</h2>
+    <div class="tree">
+<span class="folder">src/</span>
+├── <span class="folder">pages/</span>
+│   ├── <span class="file">DataImport.jsx</span>        <span class="comment">← Upload screen</span>
+│   ├── <span class="file">ExecutiveSummary.jsx</span>  <span class="comment">← All-brand summary dashboard</span>
+│   ├── <span class="file">BrandAnalysis.jsx</span>     <span class="comment">← Per-brand deep dive</span>
+│   ├── <span class="file">CEPGrid.jsx</span>           <span class="comment">← Heatmap matrix</span>
+│   └── <span class="file">AIInsights.jsx</span>        <span class="comment">← AI-powered brand analyst (Ollama)</span>
+├── <span class="folder">components/</span>
+│   ├── <span class="file">Layout.jsx</span>            <span class="comment">← Nav bar + page shell (passes data via Outlet)</span>
+│   └── <span class="file">DataPreview.jsx</span>       <span class="comment">← Preview step before confirming import</span>
+└── <span class="folder">lib/</span>
+    ├── <span class="file">dataProcessor.js</span>      <span class="comment">← CSV parser, brand & CEP aggregator</span>
+    ├── <span class="file">metrics.js</span>            <span class="comment">← MPen, NS, MMS calculations</span>
+    └── <span class="file">ollamaService.js</span>      <span class="comment">← Ollama API bridge (generate insights)</span>
+
+<span class="folder">docs/</span>
+├── <span class="file">Muhimma_App_Roadmap.html</span>  <span class="comment">← Product roadmap (open in browser)</span>
+└── <span class="file">Muhimma_App_Walkthrough.html</span> <span class="comment">← This document</span>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT -->
+  <section>
+    <div class="section-label">Section 06</div>
+    <h2 class="section-title">What's Next</h2>
+    <p style="font-size:14px; color:var(--muted); line-height:1.9;">
+      See the full <a href="./Muhimma_App_Roadmap.html" style="color:var(--primary); font-weight:600;">Product Roadmap →</a> for the 4-phase plan covering:
+    </p>
+    <ul style="margin: 14px 0 0 20px; font-size:14px; color:var(--muted); line-height:2.2;">
+      <li><strong style="color:var(--text)">Phase 1</strong> — Stability & bug fixes (data persistence, normalization, formula corrections)</li>
+      <li><strong style="color:var(--text)">Phase 2</strong> — Visualizations (radar charts, heatmap improvements, brand comparison page)</li>
+      <li><strong style="color:var(--text)">Phase 3</strong> — Export & collaboration (Excel, PDF, shareable links)</li>
+      <li><strong style="color:var(--text)">Phase 4</strong> — Advanced analytics (Mental Advantage Gap, historical tracking, AI insights)</li>
+    </ul>
+  </section>
+
+  <div class="doc-footer">
+    <p><strong>Muhimmaapp Analytics</strong> · Project Walkthrough v1.0</p>
+    <p style="margin-top:6px;">March 31, 2026 · Internal Use Only</p>
+  </div>
+
+</div>
+</body>
+</html>

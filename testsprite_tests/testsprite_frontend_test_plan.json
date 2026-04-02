@@ -1,0 +1,638 @@
+[
+  {
+    "id": "TC001",
+    "title": "Upload a valid Wide Text CSV and proceed to preview",
+    "description": "Verifies a user can upload a valid CSV, see a successful load state with file name, and navigate to the data preview page.",
+    "category": "CSV Data Upload",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the data preview page"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Reject malformed or non-CSV upload and remain on upload page",
+    "description": "Verifies the app shows a parse failure state for an invalid file and does not proceed to preview.",
+    "category": "CSV Data Upload",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a non-CSV or malformed file using the upload control"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a parse error message is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user remains on the upload page"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Download sample CSV format from upload page",
+    "description": "Verifies the sample format download can be initiated from the upload page.",
+    "category": "CSV Data Upload",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to download the sample format"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a download is initiated"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Preview shows parsed dataset summary after successful upload",
+    "description": "Verifies the preview page displays a non-empty summary for brands, CEPs, and respondents after uploading data.",
+    "category": "Data Preview",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify summary of brands, CEPs, and respondent count is displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Confirm data on preview and navigate to executive summary",
+    "description": "Verifies confirming the previewed data routes the user into the Executive Summary analysis page.",
+    "category": "Data Preview",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "action",
+        "description": "Submit the confirm action to proceed to analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the executive summary page"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Reset/discard data from preview and return to upload",
+    "description": "Verifies a user can discard loaded data from preview and is returned to the upload page.",
+    "category": "Data Preview",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "action",
+        "description": "Click the cancel or reset action to discard data"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the upload page"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Preview page without loaded data shows empty state and can navigate to upload",
+    "description": "Verifies the preview page indicates no data is loaded and provides a way back to upload.",
+    "category": "Data Preview",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /preview"
+      },
+      {
+        "type": "action",
+        "description": "Click the action that navigates to upload data"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the upload page"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Executive summary loads KPIs and brand table after confirming data",
+    "description": "Verifies the executive summary displays core KPI cards and a non-empty sortable brand performance table after data is confirmed.",
+    "category": "Executive Summary",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "action",
+        "description": "Submit the confirm action to proceed to analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify KPI cards for key totals and averages are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the brand performance table is displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Sort brand performance table by a metric column",
+    "description": "Verifies a user can change the sort order of the brand table via a column sort control.",
+    "category": "Executive Summary",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "action",
+        "description": "Submit the confirm action to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click a table column header to change the sort order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the table row order updates to reflect the selected sort"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Export brand metrics as CSV from executive summary",
+    "description": "Verifies the executive summary export action initiates a CSV download for brand metrics.",
+    "category": "Executive Summary",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to proceed to the data preview"
+      },
+      {
+        "type": "action",
+        "description": "Submit the confirm action to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the export action to export brand metrics as CSV"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a CSV download is initiated"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Brand Analysis loads and allows selecting a brand to view metrics and chart",
+    "description": "Verifies a user can select a brand and see populated metric cards and an MPen comparison chart for that brand.",
+    "category": "Brand Analysis",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the brand analysis page"
+      },
+      {
+        "type": "action",
+        "description": "Select a brand from the dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the metric cards for the selected brand are displayed with numeric values"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a bar chart comparing mental penetration across brands is displayed with the selected brand highlighted"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Brand Analysis shows MMS position label after brand selection",
+    "description": "Verifies that selecting a brand displays an MMS position classification label (Strong/Stable/Vulnerable).",
+    "category": "Brand Analysis",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the brand analysis page"
+      },
+      {
+        "type": "action",
+        "description": "Select a brand from the dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an MMS position label is displayed for the selected brand"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the mental market share value is shown in the metric cards"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Brand Analysis changes displayed metrics when switching brands",
+    "description": "Verifies that switching the selected brand updates the displayed brand-specific metrics.",
+    "category": "Brand Analysis",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the brand analysis page"
+      },
+      {
+        "type": "action",
+        "description": "Select a brand from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select a different brand from the dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected brand’s metric cards update to new numeric values"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the bar chart highlight updates to match the newly selected brand"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Brand Analysis supports info icon hover for metric definitions",
+    "description": "Verifies that hovering metric info icons reveals a definition/tooltip for the metric.",
+    "category": "Brand Analysis",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the brand analysis page"
+      },
+      {
+        "type": "action",
+        "description": "Select a brand from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Hover over an info icon associated with a metric card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a metric definition tooltip or help text becomes visible"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Brand Analysis empty state appears when no parsed data exists and user can go upload",
+    "description": "Verifies that navigating to Brand Analysis with no loaded data shows an upload prompt and allows navigating to the upload page.",
+    "category": "Brand Analysis",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /brand-analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty state prompting the user to upload data is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the call to action to go to the data upload page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the data import page with the CSV upload control available"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "CEP Grid loads and displays summary widgets and heatmap after data load",
+    "description": "Verifies a user can load CSV data, open the CEP Grid page, and see summary widgets and the heatmap grid.",
+    "category": "CEP Grid",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the CEP grid page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify summary widgets for CEP grid are displayed with numeric values"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a color-coded brand-by-CEP grid is displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "CEP Grid supports horizontal scrolling to inspect all CEP columns",
+    "description": "Verifies the CEP Grid can be horizontally scrolled to reveal additional CEP columns.",
+    "category": "CEP Grid",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the CEP grid page"
+      },
+      {
+        "type": "action",
+        "description": "Scroll horizontally within the grid area to reveal additional CEP columns"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify additional CEP columns become visible in the grid"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "CEP Grid shows percentage values inside cells for brand-CEP associations",
+    "description": "Verifies that the heatmap cells show percentage values representing association strength.",
+    "category": "CEP Grid",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the CEP grid page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one grid cell displays a percentage value for association strength"
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "CEP Grid export action is available and initiates CSV export",
+    "description": "Verifies that the export control is available and triggers a CSV export action from the UI.",
+    "category": "CEP Grid",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid Wide Text survey CSV file using the upload control"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the data preview to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the data preview to proceed to analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open the CEP grid page"
+      },
+      {
+        "type": "action",
+        "description": "Click the export control to export the grid as CSV"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the UI indicates the export action was initiated or completed"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "CEP Grid empty state appears when no parsed data exists and user can go upload",
+    "description": "Verifies that navigating to CEP Grid with no loaded data shows an upload prompt and allows navigating to the upload page.",
+    "category": "CEP Grid",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cep-grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty state prompting the user to upload data is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the call to action to go to the data upload page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the data import page with the CSV upload control available"
+      }
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": [
+    "TestSprite"
+  ],
+  "enableAllProjectMcpServers": true
+}

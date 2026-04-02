@@ -4,8 +4,9 @@ import Layout from './components/Layout';
 import DataImport from './pages/DataImport';
 import DataPreview from './components/DataPreview'; // reuse old one? Wait, moved to pages? Wait, old one is fine.
 import ExecutiveSummary from './pages/ExecutiveSummary';
-import BrandAnalysis from './pages/BrandAnalysis'; // we haven't created this yet
-import CEPGrid from './pages/CEPGrid'; // we haven't created this yet
+import BrandAnalysis from './pages/BrandAnalysis';
+import CEPGrid from './pages/CEPGrid';
+import AIInsights from './pages/AIInsights';
 
 // Placeholder until built
 const Placeholder = ({ title }) => <div className="p-8 text-center mt-20 text-on-surface-variant">Building {title}...</div>;
@@ -57,6 +58,7 @@ function AppContent() {
         <Route path="/executive-summary" element={<ExecutiveSummary />} />
         <Route path="/brand-analysis" element={<BrandAnalysis />} />
         <Route path="/cep-grid" element={<CEPGrid />} />
+        <Route path="/ai-insights" element={<AIInsights />} />
         
       </Route>
     </Routes>

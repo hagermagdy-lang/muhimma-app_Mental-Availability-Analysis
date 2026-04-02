@@ -42,6 +42,10 @@ export default function Layout({ processedData }) {
             CEP Map
           </Link>
 
+          <Link to="/ai-insights" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/ai-insights' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
+            AI Analyst
+          </Link>
+
         </div>
       </nav>
     </div>
