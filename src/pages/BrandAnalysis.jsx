@@ -38,8 +38,7 @@ export default function BrandAnalysis() {
        cep, 
        percentage: totalBrandAssociations > 0 ? (count / totalBrandAssociations) * 100 : 0
     }))
-    .sort((a,b) => b.percentage - a.percentage)
-    .slice(0, 4); // Top 4 CEPs
+    .sort((a,b) => b.percentage - a.percentage);
 
   const avgPen = metrics.reduce((sum,m)=>sum+m.mPen, 0) / metrics.length;
   const avgNs = metrics.reduce((sum,m)=>sum+m.networkSize, 0) / metrics.length;
@@ -53,25 +52,30 @@ export default function BrandAnalysis() {
   return (
     <div className="animate-in fade-in duration-500 pb-20 mt-4 md:mt-10">
       
-      <div className="flex justify-between items-center mb-6">
-         <h2 className="text-3xl font-bold uppercase italic tracking-tighter">Brand Deep Dive</h2>
-         <select 
-            value={selectedBrand} 
-            onChange={e => setSelectedBrand(e.target.value)}
-            className="bg-surface-container-high border-none text-on-surface rounded p-2 text-sm max-w-[200px]"
-         >
+      <div className="mb-8">
+         <p className="text-secondary font-label text-xs uppercase tracking-[0.2em] mb-2">Performance Analysis</p>
+         <h2 className="text-4xl md:text-5xl font-headline font-extrabold tracking-tighter text-on-surface mb-4">Brand Deep Dive</h2>
+         <div className="flex flex-wrap gap-2 mt-4">
             {metrics.map(m => (
-               <option key={m.brand} value={m.brand}>{m.brand}</option>
+               <button
+                  key={m.brand}
+                  onClick={() => setSelectedBrand(m.brand)}
+                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${
+                    m.brand === selectedBrand
+                      ? 'bg-primary text-on-primary shadow-lg shadow-primary/20'
+                      : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+                  }`}
+               >
+                  {m.brand}
+               </button>
             ))}
-         </select>
+         </div>
       </div>
 
       {/* Hero Visualization Section */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6">
         <div className="lg:col-span-8 flex flex-col justify-end p-8 bg-surface-container-low rounded-sm relative overflow-hidden h-[340px] border border-outline-variant/10">
-          <div className="absolute inset-0 opacity-10">
-            <img className="w-full h-full object-cover grayscale brightness-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrmAluRFD9x6II_A1a1GSksJuCd_hXqZ3YBIi0ubBAQGmne9_TAH15fdfyvOsQTGBUe2R_qDaDNaGVGvelSEtLTB_DeNLYBmCnv32gqu1PoDqryatig3mHB2AYt23xFwAxUs8W97prBICoqKg7_EO7RoWJKmqR8F8HSRDpirEHb1pzatlbVhzEtRMmVKbPs7cwEyj5EJ2iU2--MswHNNsbojG9XIUl2Q1hsYg3iD7IYPAL7UBBLYYKmlcH95qmrEMWG8nJshKiEiU" alt="BG" />
-          </div>
+          <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-primary/30 via-transparent to-secondary/20"></div>
           <div className="relative z-10">
             <span className="text-secondary font-bold text-[10px] uppercase tracking-[0.2em] mb-3 block">Performance Asset</span>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-on-surface mb-4 uppercase italic">
@@ -79,8 +83,8 @@ export default function BrandAnalysis() {
             </h2>
             <div className="flex items-baseline gap-3">
               <span className="text-6xl font-black text-primary tracking-tighter">{currentMetric.mPen.toFixed(1)}%</span>
-              <span className="text-secondary flex items-center text-xs font-bold uppercase tracking-wider">
-                  <span className="material-symbols-outlined text-sm mr-1">trending_up</span> Live
+              <span className={`text-xs font-bold uppercase tracking-wider ${currentMetric.mPen > avgPen ? 'text-tertiary' : 'text-error'}`}>
+                  {currentMetric.mPen > avgPen ? 'Above Avg' : 'Below Avg'}
               </span>
             </div>
           </div>
@@ -184,21 +188,22 @@ export default function BrandAnalysis() {
         </div>
 
         {/* CEP Strength Breakdown */}
-        <div className="xl:col-span-4 bg-surface-container-high p-6 rounded-sm border border-outline-variant/10">
-          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary italic mb-8">CEP Association Component</h3>
-          <div className="space-y-6">
+        <div className="xl:col-span-4 bg-surface-container-high p-6 rounded-sm border border-outline-variant/10 flex flex-col">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary italic mb-6">CEP Association Breakdown</h3>
+          <div className="space-y-4 overflow-y-auto max-h-[300px] pr-1 no-scrollbar flex-1">
              {cepStrengths.map((cs, i) => (
-                <div key={i} className="space-y-2">
+                <div key={i} className="space-y-1.5">
                   <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
                     <span className="text-on-surface truncate pr-2" title={cs.cep}>{cs.cep}</span>
-                    <span className="text-primary">{cs.percentage.toFixed(0)}%</span>
+                    <span className="text-primary flex-shrink-0">{cs.percentage.toFixed(0)}%</span>
                   </div>
                   <div className="h-1 w-full bg-surface-container rounded-full overflow-hidden">
-                    <div className="h-full bg-primary rounded-full transition-all" style={{width: `${cs.percentage}%`, opacity: 1 - (i * 0.2)}}></div>
+                    <div className="h-full bg-primary rounded-full transition-all" style={{width: `${cs.percentage}%`, opacity: Math.max(0.3, 1 - (i * 0.08))}}></div>
                   </div>
                 </div>
              ))}
           </div>
+          <p className="text-[9px] text-on-surface-variant uppercase tracking-widest mt-4 pt-3 border-t border-outline-variant/10">{cepStrengths.length} CEPs total</p>
         </div>
 
       </section>

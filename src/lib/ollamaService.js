@@ -1,86 +1,83 @@
-
 /**
- * Service to communicate with a local Ollama instance.
+ * Service to communicate with a local Ollama instance via Vite proxy.
  */
 
-const OLLAMA_BASE_URL = 'http://localhost:11434';
+const OLLAMA_BASE_URL = '';
 
-/**
- * Checks if the Ollama server is reachable.
- * @returns {Promise<boolean>}
- */
 export async function checkOllamaStatus() {
   try {
     const response = await fetch(`${OLLAMA_BASE_URL}/api/tags`);
     return response.ok;
-  } catch (error) {
-    console.error('Ollama connection failed:', error);
+  } catch {
     return false;
   }
 }
 
 /**
- * Generates an insight summary from survey data using Ollama.
- * @param {Object} processedData - The survey data from dataProcessor.
- * @param {string} model - The model name (e.g., 'llama3').
- * @returns {Promise<string>} - The AI generated markdown text.
+ * Streams AI insights from Ollama, calling onChunk for each piece of text.
  */
-export async function generateAIInsights(processedData, model = 'llama3') {
+export async function generateAIInsights(processedData, model = 'llama3', onChunk) {
   const { brands, summary, totalRespondents, totalCategoryAssociations } = processedData;
 
-  // Prepare a concise context for the LLM
-  const context = {
-    totalRespondents,
-    totalCategoryAssociations,
-    brands: brands.slice(0, 10).map(brand => {
-        const b = summary[brand];
-        return {
-          name: brand,
-          mPen: ((b.repondentsWithAtLeastOne / totalRespondents) * 100).toFixed(1) + '%',
-          ns: (b.totalAssociations / b.repondentsWithAtLeastOne).toFixed(2),
-          mms: ((b.totalAssociations / totalCategoryAssociations) * 100).toFixed(1) + '%'
-        };
-    })
-  };
+  const context = brands.slice(0, 10).map(brand => {
+    const b = summary[brand];
+    const pen = b.respondentsWithAtLeastOne ?? b.repondentsWithAtLeastOne ?? 0;
+    return {
+      name: brand,
+      mPen: ((pen / totalRespondents) * 100).toFixed(1) + '%',
+      ns: pen > 0 ? (b.totalAssociations / pen).toFixed(2) : '0',
+      mms: ((b.totalAssociations / totalCategoryAssociations) * 100).toFixed(1) + '%'
+    };
+  });
 
-  const prompt = `
-    You are a Strategic Brand Consultant. Analyze this Mental Availability data for a category:
-    
-    Category Data Summary:
-    - Total Respondents: ${context.totalRespondents}
-    - Total Associations: ${context.totalCategoryAssociations}
-    
-    Brand Metrics (MPen = Mental Penetration, NS = Network Size, MMS = Mental Market Share):
-    ${context.brands.map(b => `- ${b.name}: MPen ${b.mPen}, NS ${b.ns}, MMS ${b.mms}`).join('\n')}
-    
-    TASK:
-    1. Identify 2-3 **Statistical Anomalies** (e.g., brands with high penetration but small network size, or niche brands with small penetration but high associations).
-    2. Provide **Marketing Strategy** recommendations for the top 2 brands to increase their Mental Availability.
-    
-    Format your response in professional Markdown with clear headings. Be concise and strategic.
-  `;
+  const prompt = `You are a Strategic Brand Consultant. Analyze this Mental Availability data:
 
-  try {
-    const response = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model,
-        prompt,
-        stream: false, // User requested single block
-      }),
-    });
+Category: ${totalRespondents} respondents, ${totalCategoryAssociations} total associations.
 
-    if (!response.ok) {
-      throw new Error(`Ollama error: ${response.statusText}`);
-    }
+Brand Metrics (MPen = Mental Penetration, NS = Network Size, MMS = Mental Market Share):
+${context.map(b => `- ${b.name}: MPen ${b.mPen}, NS ${b.ns}, MMS ${b.mms}`).join('\n')}
 
-    const data = await response.json();
-    return data.response;
-  } catch (error) {
-    console.error('Failed to generate insights:', error);
-    throw error;
+Provide a concise analysis with these sections:
+## Key Findings
+2-3 statistical anomalies or notable patterns.
+
+## Brand Rankings
+Rank all brands by mental availability strength with a one-line verdict each.
+
+## Strategic Recommendations
+Actionable marketing strategies for the top 2 brands to grow Mental Availability.
+
+Use professional Markdown. Be concise and strategic.`;
+
+  const response = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model, prompt, stream: true }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Ollama error: ${response.status} ${response.statusText}`);
   }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let full = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    // Ollama streams newline-delimited JSON objects
+    for (const line of chunk.split('\n').filter(Boolean)) {
+      try {
+        const json = JSON.parse(line);
+        if (json.response) {
+          full += json.response;
+          onChunk(full);
+        }
+      } catch { /* skip partial lines */ }
+    }
+  }
+
+  return full;
 }

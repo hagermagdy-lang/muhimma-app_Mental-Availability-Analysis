@@ -1,11 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { calculateMetrics } from '../lib/metrics';
 import MetricInfo from '../components/MetricInfo';
 
 export default function ExecutiveSummary() {
   const { processedData } = useOutletContext();
-  
+  const [sortKey, setSortKey] = useState('mms');
+  const [sortAsc, setSortAsc] = useState(false);
+  const [exportMsg, setExportMsg] = useState(false);
+
   const metrics = useMemo(() => {
     if (!processedData) return null;
     return calculateMetrics(processedData);
@@ -27,7 +30,17 @@ export default function ExecutiveSummary() {
   const totalPen = metrics.reduce((sum, m) => sum + m.mPen, 0);
   const avgPen = (totalPen / metrics.length).toFixed(1);
   const maxMMS = Math.max(...metrics.map(m => m.mms));
-  const sortedMetrics = [...metrics].sort((a, b) => b.mms - a.mms);
+
+  const handleSort = (key) => {
+    if (sortKey === key) { setSortAsc(!sortAsc); }
+    else { setSortKey(key); setSortAsc(false); }
+  };
+  const sortIcon = (key) => sortKey === key ? (sortAsc ? ' ↑' : ' ↓') : '';
+
+  const sortedMetrics = [...metrics].sort((a, b) => {
+    const diff = a[sortKey] - b[sortKey];
+    return sortAsc ? diff : -diff;
+  });
 
   const handleExport = () => {
     const headers = ['Brand', 'Mental Penetration (%)', 'Network Size', 'Mental Market Share (%)'];
@@ -45,6 +58,8 @@ export default function ExecutiveSummary() {
     a.download = 'brand_performance.csv';
     a.click();
     URL.revokeObjectURL(url);
+    setExportMsg(true);
+    setTimeout(() => setExportMsg(false), 2000);
   };
 
   return (
@@ -108,7 +123,7 @@ export default function ExecutiveSummary() {
           <div className="flex items-center gap-4">
             <span className="text-[10px] text-on-surface-variant uppercase tracking-widest">{sortedMetrics.length} Brands · {processedData.totalRespondents} Respondents</span>
             <button onClick={handleExport} className="bg-primary hover:bg-secondary text-on-primary px-4 py-1.5 rounded text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 duration-200">
-              Export CSV
+              {exportMsg ? '✓ Downloaded' : 'Export CSV'}
             </button>
           </div>
         </div>
@@ -118,9 +133,9 @@ export default function ExecutiveSummary() {
             <thead>
               <tr className="bg-surface-container-high/50">
                 <th className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap">Brand</th>
-                <th className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap"><span className="inline-flex items-center">Mental Penetration<MetricInfo text="% of all respondents who linked this brand to at least one CEP. Higher = more people have this brand in mind." /></span></th>
-                <th className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap"><span className="inline-flex items-center">Network Size<MetricInfo text="Average number of CEPs linked to this brand by those who mentioned it. Higher = richer, broader mental associations." /></span></th>
-                <th className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap"><span className="inline-flex items-center">Mental Market Share<MetricInfo text="This brand's share of all associations in the category. A proxy for dominance of mental space relative to all competitors." /></span></th>
+                <th onClick={() => handleSort('mPen')} className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap cursor-pointer hover:text-secondary transition-colors"><span className="inline-flex items-center">Mental Penetration{sortIcon('mPen')}<MetricInfo text="% of all respondents who linked this brand to at least one CEP. Higher = more people have this brand in mind." /></span></th>
+                <th onClick={() => handleSort('networkSize')} className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap cursor-pointer hover:text-secondary transition-colors"><span className="inline-flex items-center">Network Size{sortIcon('networkSize')}<MetricInfo text="Average number of CEPs linked to this brand by those who mentioned it. Higher = richer, broader mental associations." /></span></th>
+                <th onClick={() => handleSort('mms')} className="py-4 px-6 text-[10px] font-bold text-outline uppercase tracking-widest whitespace-nowrap cursor-pointer hover:text-secondary transition-colors"><span className="inline-flex items-center">Mental Market Share{sortIcon('mms')}<MetricInfo text="This brand's share of all associations in the category. A proxy for dominance of mental space relative to all competitors." /></span></th>
               </tr>
             </thead>
             <tbody className="font-body text-sm divide-y divide-outline-variant/5">

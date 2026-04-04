@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 
 export default function CEPGrid() {
   const { processedData } = useOutletContext();
+  const [exportMsg, setExportMsg] = useState(false);
 
   if (!processedData) {
     return (
@@ -38,6 +39,8 @@ export default function CEPGrid() {
     a.download = 'cep_grid.csv';
     a.click();
     URL.revokeObjectURL(url);
+    setExportMsg(true);
+    setTimeout(() => setExportMsg(false), 2000);
   };
 
   // Helper for cell styling — uses inline styles to avoid Tailwind purging dynamic class names
@@ -92,12 +95,13 @@ export default function CEPGrid() {
         </div>
 
         <div className="bg-surface-container-low p-6 border-l-2 border-primary">
-          <span className="text-[10px] uppercase font-black text-on-surface-variant tracking-[0.2em]">Data Freshness</span>
-          <div className="flex items-center gap-3 mt-3">
-            <span className="w-2.5 h-2.5 rounded-sm bg-primary animate-pulse"></span>
-            <span className="text-sm font-black text-white uppercase tracking-tighter">Real-Time Sync</span>
+          <span className="text-[10px] uppercase font-black text-on-surface-variant tracking-[0.2em]">Respondents</span>
+          <div className="flex items-end justify-between mt-3">
+            <span className="text-4xl font-black tracking-tighter text-white">{processedData.totalRespondents}</span>
           </div>
-          <p className="text-[10px] text-on-surface-variant mt-3 uppercase tracking-widest font-medium">Survey Parsed Successfully</p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-xs text-on-surface-variant font-medium">Survey Sample Size</span>
+          </div>
         </div>
       </div>
 
@@ -113,22 +117,9 @@ export default function CEPGrid() {
             Analyzing Category Entry Point (CEP) strength across core brand assets. Identifying white space opportunities and competitive overlaps based on actual imported dataset telemetry.
           </p>
         </div>
-        <div className="bg-surface p-6 border border-primary/10 rounded-sm flex items-center gap-6 shadow-lg">
-          <div className="flex flex-col gap-1">
-            <span className="text-[10px] uppercase tracking-widest text-on-surface-variant font-black">Grid View Mode</span>
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-white">Standard</span>
-              <button className="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center rounded-sm bg-outline transition-colors focus:outline-none">
-                <span className="translate-x-5 inline-block h-4 w-4 transform rounded-sm bg-primary transition duration-200"></span>
-              </button>
-              <span className="text-xs font-bold text-primary">Show Delta</span>
-            </div>
-          </div>
-          <div className="h-10 w-px bg-primary/20"></div>
-          <button onClick={handleExport} className="bg-primary hover:bg-secondary text-on-primary px-6 py-2.5 rounded-sm text-[11px] font-black uppercase tracking-widest transition-all active:scale-95 duration-200">
-            Export .CSV
-          </button>
-        </div>
+        <button onClick={handleExport} className="bg-primary hover:bg-secondary text-on-primary px-6 py-2.5 rounded-sm text-[11px] font-black uppercase tracking-widest transition-all active:scale-95 duration-200 shadow-lg">
+          {exportMsg ? '✓ Downloaded' : 'Export .CSV'}
+        </button>
       </section>
 
       {/* The Grid & Heatmap */}
@@ -144,7 +135,7 @@ export default function CEPGrid() {
           {brands.map((b, i) => (
             <div key={b} className="h-16 flex flex-col justify-center px-4 border-b border-background">
               <span className="block text-sm font-black text-white uppercase tracking-tight truncate">{b}</span>
-              <span className="text-[10px] text-on-surface-variant uppercase tracking-widest opacity-60">Index {i+1}</span>
+              <span className="text-[10px] text-on-surface-variant uppercase tracking-widest opacity-60">{summary[b].totalAssociations} mentions</span>
             </div>
           ))}
         </div>

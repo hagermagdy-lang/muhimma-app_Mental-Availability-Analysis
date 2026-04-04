@@ -25,27 +25,25 @@ export default function Layout({ processedData }) {
       {/* BottomNavBar */}
       <nav className="fixed bottom-0 w-full z-50 bg-[#0b1326]/85 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.2)]">
         <div className="flex justify-around items-center h-20 w-full px-4 pb-safe max-w-7xl mx-auto">
-          
-          <Link to="/" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
-            Data Upload
-          </Link>
-
-          <Link to="/executive-summary" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/executive-summary' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
-            Overview
-          </Link>
-
-          <Link to="/brand-analysis" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/brand-analysis' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
-            Brand Analysis
-          </Link>
-
-          <Link to="/cep-grid" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/cep-grid' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
-            CEP Map
-          </Link>
-
-          <Link to="/ai-insights" className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${currentPath === '/ai-insights' ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
-            AI Analyst
-          </Link>
-
+          {[
+            { to: '/', label: 'Data Upload', needsData: false },
+            { to: '/executive-summary', label: 'Overview', needsData: true },
+            { to: '/brand-analysis', label: 'Brand Analysis', needsData: true },
+            { to: '/cep-grid', label: 'CEP Map', needsData: true },
+            { to: '/ai-insights', label: 'AI Analyst', needsData: true },
+          ].map(({ to, label, needsData }) => {
+            const isActive = currentPath === to;
+            const isDisabled = needsData && !processedData;
+            return isDisabled ? (
+              <span key={to} className="flex items-center justify-center py-2 px-5 rounded-lg text-sm font-semibold tracking-wide text-slate-600 cursor-not-allowed" title="Upload data first">
+                {label}
+              </span>
+            ) : (
+              <Link key={to} to={to} className={`flex items-center justify-center py-2 px-5 rounded-lg transition-all active:scale-95 duration-200 text-sm font-semibold tracking-wide ${isActive ? 'text-secondary bg-[#161e31]' : 'text-slate-400 hover:text-secondary'}`}>
+                {label}
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </div>
