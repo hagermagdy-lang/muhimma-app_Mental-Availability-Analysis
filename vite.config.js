@@ -11,11 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      '/groq-api': {
+      '/api/ai': {
         target: 'https://api.groq.com',
         changeOrigin: true,
         secure: true,
-        rewrite: (path) => path.replace(/^\/groq-api/, ''),
+        rewrite: () => '/openai/v1/chat/completions',
       }
     }
   }

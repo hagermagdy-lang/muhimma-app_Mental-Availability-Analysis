@@ -1,5 +1,7 @@
-// Groq API key loaded from environment variable (set in .env)
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || '';
+// In dev: Vite proxy forwards /api/ai to Groq with the key from .env
+// In production: Netlify function at /api/ai adds the key server-side
+const isDev = import.meta.env.DEV;
+const GROQ_DEV_KEY = isDev ? import.meta.env.VITE_GROQ_API_KEY : '';
 
 export async function generateAIAnalysis(processedData, onChunk) {
   const { brands, ceps, summary, totalRespondents, totalCategoryAssociations } = processedData;
@@ -37,12 +39,15 @@ Identify uncontested or under-contested CEP territories that brands could claim.
 
 Use professional language. Be specific with numbers. Format in clean Markdown with **bold** for emphasis.`;
 
-  const response = await fetch('/groq-api/openai/v1/chat/completions', {
+  const headers = { 'Content-Type': 'application/json' };
+  // In dev mode, add auth header directly; in prod, the server function adds it
+  if (isDev && GROQ_DEV_KEY) {
+    headers['Authorization'] = `Bearer ${GROQ_DEV_KEY}`;
+  }
+
+  const response = await fetch('/api/ai', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${GROQ_API_KEY}`,
-    },
+    headers,
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       stream: true,
