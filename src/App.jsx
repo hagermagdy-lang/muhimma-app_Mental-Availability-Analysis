@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import DataImport from './pages/DataImport';
 import DataPreview from './components/DataPreview'; // reuse old one? Wait, moved to pages? Wait, old one is fine.
@@ -67,8 +67,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppContent />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
