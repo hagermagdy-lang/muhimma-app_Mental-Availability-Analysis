@@ -1,7 +1,9 @@
 // In dev: Vite proxy forwards /api/ai to Groq with the key from .env
-// In production: Netlify function at /api/ai adds the key server-side
+// In production: Cloudflare Worker proxies to Groq with the key server-side
 const isDev = import.meta.env.DEV;
 const GROQ_DEV_KEY = isDev ? import.meta.env.VITE_GROQ_API_KEY : '';
+// Replace with your Cloudflare Worker URL after deploying (e.g. https://muhimma-ai.your-name.workers.dev)
+const WORKER_URL = 'https://dawn-butterfly-89d9muhimma-ai.hagerrashed93.workers.dev/';
 
 export async function generateAIAnalysis(processedData, onChunk) {
   const { brands, ceps, summary, totalRespondents, totalCategoryAssociations } = processedData;
@@ -45,7 +47,9 @@ Use professional language. Be specific with numbers. Format in clean Markdown wi
     headers['Authorization'] = `Bearer ${GROQ_DEV_KEY}`;
   }
 
-  const response = await fetch('/api/ai', {
+  const apiUrl = isDev ? '/api/ai' : WORKER_URL;
+
+  const response = await fetch(apiUrl, {
     method: 'POST',
     headers,
     body: JSON.stringify({
